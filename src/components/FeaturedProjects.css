@@ -144,3 +144,31 @@
     padding: 3rem;
   }
 }
+
+.mobile-live-btn {
+  display: none;
+  margin-top: 2rem;
+  width: fit-content;
+}
+
+@media (max-width: 992px) {
+  .mobile-live-btn {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .featured-desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 1.8rem;
+  }
+  .featured-info {
+    padding: 2rem 1.5rem;
+  }
+}
+

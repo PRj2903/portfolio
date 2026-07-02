@@ -17,7 +17,11 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const MESSAGES_FILE = path.join(__dirname, 'messages.json');
+// On Vercel, the filesystem is read-only, so write messages to /tmp (ephemeral).
+// Locally, write to the root of the project.
+const MESSAGES_FILE = process.env.VERCEL
+  ? path.join('/tmp', 'messages.json')
+  : path.join(__dirname, '..', 'messages.json');
 
 // POST endpoint for contact submissions
 app.post('/api/contact', async (req, res) => {
@@ -96,7 +100,7 @@ app.get('/api/messages', (req, res) => {
 });
 
 // Serve static files from the React frontend build directory if dist folder exists
-const distPath = path.join(__dirname, 'dist');
+const distPath = path.join(__dirname, '..', 'dist');
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
   
@@ -108,6 +112,11 @@ if (fs.existsSync(distPath)) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Only listen to port if not running in Vercel's serverless environment
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export default app;

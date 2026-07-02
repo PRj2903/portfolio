@@ -284,3 +284,20 @@ section {
   }
 }
 
+/* Responsive Layout Adjustments */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 60px;
+  }
+  .section-title {
+    font-size: 2.2rem;
+  }
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+  .container {
+    padding: 0 1.2rem;
+  }
+}
+
+

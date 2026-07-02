@@ -6,9 +6,21 @@ const CustomCursor = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   
   const requestRef = useRef();
   const trailRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice(
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(max-width: 1024px)').matches
+      );
+    };
+    checkTouch();
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -84,7 +96,7 @@ const CustomCursor = () => {
     return () => cancelAnimationFrame(requestRef.current);
   }, [position]);
 
-  if (!isVisible) return null;
+  if (isTouchDevice || !isVisible) return null;
 
   return (
     <>

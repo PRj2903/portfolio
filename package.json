@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev:frontend": "vite",
-    "dev:backend": "nodemon server.js",
+    "dev:backend": "nodemon api/index.js",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node server.js"
+    "start": "node api/index.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

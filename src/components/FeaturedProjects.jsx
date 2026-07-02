@@ -104,6 +104,10 @@ const FeaturedProjects = () => {
                         <span key={idx} className="tech-badge" style={{ transitionDelay: `${idx * 50}ms` }}>{t}</span>
                       ))}
                     </div>
+
+                    <a href={project.link} className="btn btn-gold mobile-live-btn" target="_blank" rel="noreferrer">
+                      View Live Work <ExternalLink size={16} style={{marginLeft: '8px'}} />
+                    </a>
                   </div>
                 </div>
               </ScrollReveal>
