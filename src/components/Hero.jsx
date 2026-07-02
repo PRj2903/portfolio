@@ -4,8 +4,9 @@ import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import prathamImg from '../assets/pratham.jpg';
 import './Hero.css';
 
+const words = ['Flutter Developer', 'Creative Web Designer', 'CS Engineer', 'UI/UX Creator'];
+
 const Hero = () => {
-  const words = ['Flutter Developer', 'Creative Web Designer', 'CS Engineer', 'UI/UX Creator'];
   const [wordIdx, setWordIdx] = useState(0);
   const [subText, setSubText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);

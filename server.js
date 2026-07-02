@@ -95,6 +95,19 @@ app.get('/api/messages', (req, res) => {
   return res.json([]);
 });
 
+// Serve static files from the React frontend build directory if dist folder exists
+const distPath = path.join(__dirname, 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  
+  // For client-side routing support, send index.html for non-API routes
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(distPath, 'index.html'));
+    }
+  });
+}
+
 app.listen(PORT, () => {
-  console.log(`Backend server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

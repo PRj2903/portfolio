@@ -1,15 +1,15 @@
 # Dependency directories
-**/node_modules/
+/node_modules/
 
 # Local environment variables
-**/backend/.env
+/.env
 
 # Production build outputs
-**/dist/
-**/build/
+/dist/
+/build/
 
 # Local message store
-**/backend/messages.json
+/messages.json
 
 # Logs
 npm-debug.log*

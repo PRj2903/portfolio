@@ -13,21 +13,23 @@ import CustomCursor from './components/CustomCursor';
 import './App.css';
 
 function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  });
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
   };
 
   useEffect(() => {
-    // Check for system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
+  useEffect(() => {
     // Set up global mousemove tracking for card spotlight styling
     const handleMouseMove = (e) => {
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
