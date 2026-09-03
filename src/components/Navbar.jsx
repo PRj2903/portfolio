@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Menu, X, Moon, Sun, Search, Command } from 'lucide-react';
+import Magnetic from './Magnetic';
 import './Navbar.css';
 
-const Navbar = ({ theme, toggleTheme }) => {
+const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -23,7 +24,9 @@ const Navbar = ({ theme, toggleTheme }) => {
   const navLinks = [
     { name: 'About', href: '#about' },
     { name: 'Featured UI', href: '#featured' },
+    { name: 'Reviews', href: '#testimonials' },
     { name: 'Apps', href: '#projects' },
+    { name: 'GitHub', href: '#github-stats' },
     { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -47,15 +50,38 @@ const Navbar = ({ theme, toggleTheme }) => {
               {link.name}
             </a>
           ))}
+          
+          {/* Command Palette Trigger Button */}
+          <button
+            onClick={onOpenCommandPalette}
+            className="cmd-trigger-btn"
+            title="Search & Quick Actions (Ctrl+K / ⌘K)"
+            aria-label="Open Command Palette"
+          >
+            <Search size={14} />
+            <span className="cmd-trigger-text">Search</span>
+            <kbd className="cmd-trigger-kbd">⌘K</kbd>
+          </button>
+
           <div className="nav-actions">
-            <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme">
+            <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme" title="Toggle Theme">
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
-            <a href="#contact" className="btn btn-primary nav-btn">Let's Talk</a>
+            <Magnetic strength={12}>
+              <a href="#contact" className="btn btn-primary nav-btn">Let&apos;s Talk</a>
+            </Magnetic>
           </div>
         </div>
 
         <div className="mobile-only mobile-controls">
+          <button
+            onClick={onOpenCommandPalette}
+            className="theme-toggle-btn"
+            aria-label="Open Command Palette"
+            title="Search"
+          >
+            <Search size={18} />
+          </button>
           <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme">
             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
@@ -72,6 +98,15 @@ const Navbar = ({ theme, toggleTheme }) => {
       {/* Mobile Menu */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-nav-links">
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenCommandPalette();
+            }}
+            className="mobile-cmd-btn"
+          >
+            <Search size={18} /> Search &amp; Quick Actions (⌘K)
+          </button>
           {navLinks.map((link) => (
             <a 
               key={link.name} 
@@ -87,7 +122,7 @@ const Navbar = ({ theme, toggleTheme }) => {
             className="btn btn-primary"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Let's Talk
+            Let&apos;s Talk
           </a>
         </div>
       </div>

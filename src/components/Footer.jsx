@@ -34,7 +34,7 @@ const Footer = () => {
             <div className="footer-links">
               <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" className="footer-link">GitHub</a>
               <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" className="footer-link">LinkedIn</a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="footer-link">Twitter</a>
+              <a href="https://wa.me/919722768555?text=Hi%20Pratham,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank" rel="noreferrer" className="footer-link">WhatsApp</a>
             </div>
           </div>
         </div>

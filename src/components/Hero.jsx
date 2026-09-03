@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Download, MonitorPlay } from 'lucide-react';
+import { ArrowRight, Download, MonitorPlay, Sparkles } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import prathamImg from '../assets/pratham.jpg';
+import Magnetic from './Magnetic';
+import { triggerConfetti } from '../utils/confetti';
+import { useToast } from './Toast';
 import './Hero.css';
 
 const words = ['Flutter Developer', 'Creative Web Designer', 'CS Engineer', 'UI/UX Creator'];
@@ -10,6 +13,7 @@ const Hero = () => {
   const [wordIdx, setWordIdx] = useState(0);
   const [subText, setSubText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const { addToast } = useToast();
 
   useEffect(() => {
     let timer;
@@ -42,6 +46,15 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [subText, isDeleting, wordIdx]);
 
+  const handleResumeDownload = () => {
+    triggerConfetti();
+    addToast({
+      title: 'Resume Downloaded!',
+      message: 'Pratham_Jadwani_Resume.pdf download started',
+      type: 'sparkle',
+    });
+  };
+
   return (
     <section id="home" className="hero-section">
       <div className="hero-background">
@@ -64,21 +77,45 @@ const Hero = () => {
           </p>
           
           <div className="hero-cta-group">
-            <a href="#featured" className="btn btn-primary cta-btn">
-              View Projects <ArrowRight className="btn-icon" size={18} />
-            </a>
-            <a href="/resume.pdf" download="Pratham_Jadwani_Resume.pdf" className="btn btn-outline cta-btn" rel="noreferrer">
-              Download Resume <Download className="btn-icon" size={18} />
-            </a>
-            <a href="#featured" className="btn btn-gold cta-btn">
-              View Live Work <MonitorPlay className="btn-icon" size={18} />
-            </a>
+            <Magnetic strength={15}>
+              <a href="#featured" className="btn btn-primary cta-btn">
+                View Projects <ArrowRight className="btn-icon" size={18} />
+              </a>
+            </Magnetic>
+            <Magnetic strength={15}>
+              <a
+                href="/resume.pdf"
+                download="Pratham_Jadwani_Resume.pdf"
+                onClick={handleResumeDownload}
+                className="btn btn-outline cta-btn"
+                rel="noreferrer"
+              >
+                Download Resume <Download className="btn-icon" size={18} />
+              </a>
+            </Magnetic>
+            <Magnetic strength={15}>
+              <a href="#featured" className="btn btn-gold cta-btn">
+                View Live Work <MonitorPlay className="btn-icon" size={18} />
+              </a>
+            </Magnetic>
           </div>
 
           <div className="social-links-hero mt-4">
-            <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" className="social-link"><FaGithub size={24} /></a>
-            <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" className="social-link"><FaLinkedin size={24} /></a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-link"><FaTwitter size={24} /></a>
+            <Magnetic strength={18}>
+              <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" className="social-link" title="GitHub">
+                <FaGithub size={24} />
+              </a>
+            </Magnetic>
+            <Magnetic strength={18}>
+              <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" className="social-link" title="LinkedIn">
+                <FaLinkedin size={24} />
+              </a>
+            </Magnetic>
+            <Magnetic strength={18}>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-link" title="Twitter">
+                <FaTwitter size={24} />
+              </a>
+            </Magnetic>
           </div>
         </div>
         
