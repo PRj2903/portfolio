@@ -219,9 +219,61 @@
 }
 
 .status-msg.error {
-  background: rgba(239, 68, 68, 0.12);
+  background: rgba(239, 68, 68, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.25);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.status-error-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-error-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.fallback-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  font-family: var(--font-sans);
+}
+
+.email-fallback-btn {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.email-fallback-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.wa-fallback-btn {
+  background: #25d366;
+  color: #ffffff;
+}
+
+.wa-fallback-btn:hover {
+  background: #20ba5a;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 992px) {

@@ -36,6 +36,8 @@ const Contact = () => {
     setTimeout(() => setCopiedPhone(false), 3000);
   };
 
+  const [lastSubmission, setLastSubmission] = useState(null);
+
   const sendEmail = async (e) => {
     e.preventDefault();
     setStatus('sending');
@@ -47,6 +49,7 @@ const Contact = () => {
       subject: formData.get('subject'),
       message: formData.get('message'),
     };
+    setLastSubmission(data);
 
     try {
       const response = await fetch('/api/contact', {
@@ -62,33 +65,50 @@ const Contact = () => {
       if (response.ok) {
         setStatus('success');
         form.current.reset();
+        setLastSubmission(null);
         triggerConfetti();
         addToast({
           title: 'Message Sent Successfully!',
-          message: 'Thank you for reaching out. I will get back to you shortly.',
+          message: 'Your message has been delivered to Pratham\'s inbox.',
           type: 'sparkle',
           duration: 6000,
         });
-        setTimeout(() => setStatus(''), 6000);
+        setTimeout(() => setStatus(''), 8000);
       } else {
         setStatus('error');
         addToast({
-          title: 'Submission Error',
-          message: result.error || 'Failed to send message. Please try emailing directly.',
+          title: 'Submission Issue',
+          message: result.error || 'Server is busy. Click the fallback button below to send directly.',
           type: 'error',
+          duration: 6000,
         });
-        setTimeout(() => setStatus(''), 6000);
       }
     } catch (error) {
       console.error('API submission failed:', error);
       setStatus('error');
       addToast({
-        title: 'Network / Server Error',
-        message: 'Unable to reach the server. Please email directly at Jpratham9716@gmail.com',
+        title: 'Direct Dispatch Available',
+        message: 'Click below to dispatch directly via your Email app or WhatsApp.',
         type: 'error',
+        duration: 6000,
       });
-      setTimeout(() => setStatus(''), 6000);
     }
+  };
+
+  const openDirectEmail = () => {
+    if (!lastSubmission) return;
+    const { user_name, user_email, subject, message } = lastSubmission;
+    const bodyText = `Hi Pratham,\n\n${message}\n\nFrom: ${user_name}\nEmail: ${user_email}`;
+    const mailtoUrl = `mailto:Jpratham9716@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio Inquiry')}&body=${encodeURIComponent(bodyText)}`;
+    window.open(mailtoUrl, '_blank');
+  };
+
+  const openDirectWhatsApp = () => {
+    if (!lastSubmission) return;
+    const { user_name, user_email, subject, message } = lastSubmission;
+    const text = `Hi Pratham, I reached out via your portfolio:\n*Name:* ${user_name}\n*Email:* ${user_email}\n*Subject:* ${subject}\n*Message:* ${message}`;
+    const waUrl = `https://wa.me/919722768555?text=${encodeURIComponent(text)}`;
+    window.open(waUrl, '_blank');
   };
 
   return (
@@ -279,7 +299,25 @@ const Contact = () => {
 
               {status === 'error' && (
                 <div className="status-msg error">
-                  <AlertCircle size={18} /> Something went wrong. Click <a href="mailto:Jpratham9716@gmail.com" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 600 }}>here</a> to email directly.
+                  <div className="status-error-header">
+                    <AlertCircle size={18} /> Server unreachable. Send directly via:
+                  </div>
+                  <div className="status-error-actions">
+                    <button
+                      type="button"
+                      onClick={openDirectEmail}
+                      className="fallback-btn email-fallback-btn"
+                    >
+                      <Mail size={15} /> Open Mail App
+                    </button>
+                    <button
+                      type="button"
+                      onClick={openDirectWhatsApp}
+                      className="fallback-btn wa-fallback-btn"
+                    >
+                      <FaWhatsapp size={15} /> WhatsApp
+                    </button>
+                  </div>
                 </div>
               )}
             </form>

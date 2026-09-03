@@ -62,10 +62,9 @@ app.post(['/api/contact', '/contact'], async (req, res) => {
     }
 
     // 3. Nodemailer forwarding
-    const smtpUser = (process.env.SMTP_USER || '').trim();
-    const smtpPass = (process.env.SMTP_PASS || '').replace(/\s+/g, '');
-
-    if (smtpUser && smtpPass) {
+    const smtpUser = (process.env.SMTP_USER || 'jpratham9716@gmail.com').trim();
+    const smtpPass = (process.env.SMTP_PASS || 'nhyt srpx nrvi vurl').replace(/\s+/g, '');
+    const recipient = (process.env.FORWARD_TO || smtpUser || 'jpratham9716@gmail.com').trim();
       try {
         const transporter = nodemailer.createTransport({
           service: process.env.SMTP_SERVICE || 'gmail',
@@ -75,7 +74,6 @@ app.post(['/api/contact', '/contact'], async (req, res) => {
           },
         });
 
-        const recipient = process.env.FORWARD_TO || smtpUser;
         const mailOptions = {
           from: `"${user_name}" <${smtpUser}>`,
           to: recipient,
@@ -107,7 +105,6 @@ app.post(['/api/contact', '/contact'], async (req, res) => {
         console.error('SMTP forwarding failed:', mailError.message);
         // If SMTP specifically failed, we still return 200 if message was logged, but note warning
       }
-    }
 
     return res.status(200).json({ success: true, message: 'Message sent successfully.' });
   } catch (error) {
