@@ -283,6 +283,7 @@
 @media (max-width: 992px) {
   .bento-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   .bento-col-span-2,
   .bento-col-span-3 {
@@ -290,18 +291,55 @@
   }
   .pillars-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
   }
 }
 
 @media (max-width: 640px) {
-  .pillars-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
   .bento-card {
-    padding: 1.6rem;
+    padding: 1.35rem;
+    border-radius: 20px;
   }
   .bento-main-title {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+  }
+  .bento-main-desc {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+  .bento-main-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .bento-main-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .pillar-item {
+    gap: 6px;
+  }
+  .pillar-item h5 {
+    font-size: 0.95rem;
+  }
+  .pillar-item p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  .bento-tech-pill {
+    padding: 6px 12px;
+    font-size: 0.82rem;
   }
 }
+
+@media (max-width: 420px) {
+  .pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+

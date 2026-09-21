@@ -272,13 +272,13 @@ section {
 }
 
 .section-title {
-  font-size: 3.2rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.5px;
 }
 
-/* Hide default cursor on desktops */
-@media (min-width: 1024px) {
+/* Hide default cursor only on pointer-fine desktops */
+@media (min-width: 1024px) and (pointer: fine) {
   body, a, button, input, textarea, .btn {
     cursor: none !important;
   }
@@ -287,17 +287,45 @@ section {
 /* Responsive Layout Adjustments */
 @media (max-width: 768px) {
   :root {
-    --section-padding: 60px;
+    --section-padding: 64px;
   }
   .section-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.85rem, 6.5vw, 2.3rem);
+    letter-spacing: -0.5px;
+  }
+  .section-subtitle {
+    letter-spacing: 2px;
+    font-size: 0.8rem;
   }
   .section-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.2rem;
   }
   .container {
-    padding: 0 1.2rem;
+    padding: 0 1.25rem;
+  }
+  .btn {
+    min-height: 44px;
+    padding: 10px 22px;
+  }
+  main {
+    padding-bottom: 60px; /* Offset for MobileNavDock */
   }
 }
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding: 48px;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
+  }
+  .glass-panel {
+    border-radius: 18px;
+  }
+}
+
 
 

@@ -119,6 +119,35 @@
 @media (max-width: 768px) {
   .skills-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.4rem;
+  }
+  .skill-category-card {
+    padding: 1.8rem 1.4rem;
+    border-radius: 20px;
+  }
+  .category-header {
+    margin-bottom: 1.4rem;
+  }
+  .category-icon {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 1rem;
+  }
+  .category-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .category-title {
+    font-size: 1.25rem;
+  }
+  .skills-list {
+    gap: 1.2rem;
+  }
+  .skill-name {
+    font-size: 0.9rem;
+  }
+  .skill-percentage {
+    font-size: 0.85rem;
   }
 }
+

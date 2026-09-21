@@ -9,7 +9,7 @@ import './Hero.css';
 
 const words = ['Flutter Developer', 'Creative Web Designer', 'CS Engineer', 'UI/UX Creator'];
 
-const Hero = () => {
+const Hero = ({ onOpenResume }) => {
   const [wordIdx, setWordIdx] = useState(0);
   const [subText, setSubText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -55,6 +55,8 @@ const Hero = () => {
     });
   };
 
+  const [mobileCardMode, setMobileCardMode] = useState('photo'); // 'photo' | 'code'
+
   return (
     <section id="home" className="hero-section">
       <div className="hero-background">
@@ -64,6 +66,11 @@ const Hero = () => {
       
       <div className="container hero-content">
         <div className="hero-text animate-fade-in">
+          <div className="hero-status-pill">
+            <span className="pulse-dot"></span>
+            <span>Available for Freelance &amp; Roles</span>
+          </div>
+
           <p className="hero-greeting indigo-text">Hi, I am</p>
           <h1 className="hero-title">
             Pratham Jadwani
@@ -83,15 +90,13 @@ const Hero = () => {
               </a>
             </Magnetic>
             <Magnetic strength={15}>
-              <a
-                href="/resume.pdf"
-                download="Pratham_Jadwani_Resume.pdf"
-                onClick={handleResumeDownload}
+              <button
+                onClick={onOpenResume}
                 className="btn btn-outline cta-btn"
-                rel="noreferrer"
+                title="Preview Resume PDF In-Browser"
               >
-                Download Resume <Download className="btn-icon" size={18} />
-              </a>
+                Preview Resume <Sparkles className="btn-icon gold-text" size={18} />
+              </button>
             </Magnetic>
             <Magnetic strength={15}>
               <a href="#featured" className="btn btn-gold cta-btn">
@@ -102,25 +107,27 @@ const Hero = () => {
 
           <div className="social-links-hero mt-4">
             <Magnetic strength={18}>
-              <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" className="social-link" title="GitHub">
+              <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" className="social-link" title="GitHub" aria-label="GitHub Profile">
                 <FaGithub size={24} />
               </a>
             </Magnetic>
             <Magnetic strength={18}>
-              <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" className="social-link" title="LinkedIn">
+              <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" className="social-link" title="LinkedIn" aria-label="LinkedIn Profile">
                 <FaLinkedin size={24} />
               </a>
             </Magnetic>
             <Magnetic strength={18}>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-link" title="Twitter">
-                <FaTwitter size={24} />
+              <a href="https://wa.me/919722768555?text=Hi%20Pratham,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank" rel="noreferrer" className="social-link" title="WhatsApp" aria-label="WhatsApp Contact">
+                <Sparkles size={22} className="gold-text" />
               </a>
             </Magnetic>
           </div>
         </div>
         
         <div className="hero-visual animate-fade-in">
-          <div className="glass-card portrait-card spotlight-card"
+          <div
+            className={`glass-card portrait-card spotlight-card ${mobileCardMode === 'code' ? 'show-code-mobile' : ''}`}
+            onClick={() => setMobileCardMode(prev => prev === 'photo' ? 'code' : 'photo')}
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
               const x = e.clientX - rect.left;
@@ -135,6 +142,7 @@ const Hero = () => {
               <span className="dot dot-yellow"></span>
               <span className="dot dot-green"></span>
               <span className="terminal-title">developer_profile.json</span>
+              <span className="mobile-tap-hint">Tap to flip</span>
             </div>
             <div className="mock-terminal-body">
               <pre>

@@ -23,7 +23,7 @@ import { useToast } from './Toast';
 import { triggerConfetti } from '../utils/confetti';
 import './CommandPalette.css';
 
-const CommandPalette = ({ isOpen, onClose, theme, toggleTheme }) => {
+const CommandPalette = ({ isOpen, onClose, theme, toggleTheme, onOpenResume }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
@@ -100,10 +100,26 @@ const CommandPalette = ({ isOpen, onClose, theme, toggleTheme }) => {
 
     // Actions
     {
+      id: 'act-preview-resume',
+      group: 'Actions',
+      title: 'Preview Resume (In-Browser Lightbox)',
+      subtitle: 'View PDF with interactive highlights without downloading',
+      icon: <Sparkles size={18} />,
+      badge: 'Viewer',
+      action: () => {
+        onClose();
+        if (onOpenResume) {
+          onOpenResume();
+        } else {
+          document.dispatchEvent(new CustomEvent('open-resume-modal'));
+        }
+      },
+    },
+    {
       id: 'act-resume',
       group: 'Actions',
       title: 'Download Resume PDF',
-      subtitle: 'Get Pratham Jadwani\'s latest resume',
+      subtitle: 'Get Pratham Jadwani\'s latest resume file',
       icon: <Download size={18} />,
       badge: 'PDF',
       action: () => {

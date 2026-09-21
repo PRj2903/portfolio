@@ -129,7 +129,32 @@
 @media (max-width: 768px) {
   .app-grid {
     grid-template-columns: 1fr;
-    gap: 1.8rem;
+    gap: 1.4rem;
+  }
+  .app-card {
+    padding: 1.6rem 1.35rem;
+    border-radius: 20px;
+  }
+  .app-card-header {
+    margin-bottom: 1.4rem;
+  }
+  .app-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+  .app-icon-wrapper svg {
+    width: 26px;
+    height: 26px;
+  }
+  .app-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+  }
+  .app-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.4rem;
   }
 }
 
@@ -142,3 +167,4 @@
 .app-card.placeholder-card:hover {
   border-color: var(--accent-gold);
 }
+

@@ -8,6 +8,7 @@ import {
   MapPin,
   Sparkles,
   Download,
+  Eye,
   Code2,
   Cpu,
   Layers,
@@ -19,7 +20,7 @@ import Magnetic from './Magnetic';
 import { triggerConfetti } from '../utils/confetti';
 import { useToast } from './Toast';
 
-const About = () => {
+const About = ({ onOpenResume }) => {
   const [timeString, setTimeString] = useState('');
   const { addToast } = useToast();
 
@@ -103,14 +104,13 @@ const About = () => {
 
               <div className="bento-main-actions">
                 <Magnetic strength={15}>
-                  <a
-                    href="/resume.pdf"
-                    download="Pratham_Jadwani_Resume.pdf"
-                    onClick={handleResumeDownload}
+                  <button
+                    onClick={onOpenResume}
                     className="btn btn-primary"
+                    title="Preview Resume In-Browser"
                   >
-                    Download Resume <Download size={16} style={{ marginLeft: '8px' }} />
-                  </a>
+                    Preview Resume <Eye size={16} style={{ marginLeft: '8px' }} />
+                  </button>
                 </Magnetic>
                 <Magnetic strength={15}>
                   <a href="#contact" className="btn btn-outline">

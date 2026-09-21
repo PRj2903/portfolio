@@ -95,9 +95,22 @@ const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer Overlay */}
+      <div 
+        className={`mobile-backdrop ${mobileMenuOpen ? 'active' : ''}`}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Menu Drawer */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-nav-links">
+        <div className="mobile-nav-inner">
+          <div className="mobile-menu-header">
+            <span className="mobile-menu-title">Menu &amp; Navigation</span>
+            <span className="mobile-status-chip">
+              <span className="mobile-status-dot" /> Online
+            </span>
+          </div>
+
           <button
             onClick={() => {
               setMobileMenuOpen(false);
@@ -105,25 +118,42 @@ const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
             }}
             className="mobile-cmd-btn"
           >
-            <Search size={18} /> Search &amp; Quick Actions (⌘K)
+            <Search size={16} /> Quick Search &amp; Actions (⌘K)
           </button>
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
-              className="mobile-nav-link"
+
+          <div className="mobile-nav-links">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="mobile-nav-link"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>{link.name}</span>
+                <span className="mobile-nav-arrow">→</span>
+              </a>
+            ))}
+          </div>
+
+          {/* Quick Action Dock Inside Drawer */}
+          <div className="mobile-drawer-footer">
+            <a
+              href="https://wa.me/919722768555?text=Hi%20Pratham,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="drawer-action-btn wa-drawer-btn"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {link.name}
+              WhatsApp Direct
             </a>
-          ))}
-          <a 
-            href="#contact" 
-            className="btn btn-primary"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Let&apos;s Talk
-          </a>
+            <a 
+              href="#contact" 
+              className="btn btn-primary drawer-talk-btn"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Let&apos;s Talk
+            </a>
+          </div>
         </div>
       </div>
     </nav>

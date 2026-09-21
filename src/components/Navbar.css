@@ -182,63 +182,181 @@
   color: #ffffff;
 }
 
+.mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 98;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.mobile-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .mobile-menu {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 100%;
+  width: 85%;
+  max-width: 360px;
   height: 100vh;
+  height: 100dvh;
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border-left: 1px solid var(--glass-border);
   z-index: 99;
-  transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
 }
 
 .mobile-menu.open {
   right: 0;
 }
 
-.mobile-nav-links {
+.mobile-nav-inner {
+  padding: 5.5rem 1.8rem 2.5rem;
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.mobile-menu-header {
+  display: flex;
   align-items: center;
-  gap: 1.8rem;
-  width: 85%;
-  max-width: 320px;
+  justify-content: space-between;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.mobile-menu-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+  font-weight: 700;
+}
+
+.mobile-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.mobile-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
 }
 
 .mobile-cmd-btn {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 20px;
+  padding: 10px 16px;
   background: var(--bg-tertiary);
   border: 1px solid var(--glass-border);
   border-radius: 50px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-primary);
   cursor: pointer;
   width: 100%;
   justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-cmd-btn:active {
+  transform: scale(0.97);
+  background: var(--accent-glow);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
 }
 
 .mobile-nav-link {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: var(--text-primary);
-  transition: all 0.3s ease;
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.25s ease;
 }
 
-.mobile-nav-link:hover {
+.mobile-nav-arrow {
+  font-size: 1rem;
+  color: var(--text-tertiary);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
+  background: var(--bg-tertiary);
   color: var(--accent-primary);
-  transform: scale(1.05);
+  padding-left: 18px;
+}
+
+.mobile-nav-link:hover .mobile-nav-arrow,
+.mobile-nav-link:active .mobile-nav-arrow {
+  transform: translateX(4px);
+  color: var(--accent-primary);
+}
+
+.mobile-drawer-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: auto;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.drawer-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.wa-drawer-btn {
+  background: rgba(37, 211, 102, 0.12);
+  color: #25d366;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+}
+
+.drawer-talk-btn {
+  width: 100%;
+  justify-content: center;
 }
 
 .desktop-only { display: flex; }
@@ -248,3 +366,16 @@
   .desktop-only { display: none; }
   .mobile-only { display: flex; }
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1.1rem 0;
+  }
+  .navbar.scrolled {
+    padding: 0.85rem 0;
+  }
+  .logo {
+    font-size: 1.4rem;
+  }
+}
+

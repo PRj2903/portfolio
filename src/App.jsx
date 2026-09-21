@@ -14,6 +14,8 @@ import MouseGlow from './components/MouseGlow';
 import CustomCursor from './components/CustomCursor';
 import CommandPalette from './components/CommandPalette';
 import { ToastProvider } from './components/Toast';
+import MobileNavDock from './components/MobileNavDock';
+import ResumeModal from './components/ResumeModal';
 import './App.css';
 
 function MainContent() {
@@ -25,6 +27,7 @@ function MainContent() {
   });
 
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -46,12 +49,18 @@ function MainContent() {
       setCmdOpen(true);
     };
 
+    const handleCustomOpenResume = () => {
+      setResumeOpen(true);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('open-command-palette', handleCustomOpenCmd);
+    document.addEventListener('open-resume-modal', handleCustomOpenResume);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('open-command-palette', handleCustomOpenCmd);
+      document.removeEventListener('open-resume-modal', handleCustomOpenResume);
     };
   }, []);
 
@@ -60,11 +69,16 @@ function MainContent() {
       <CustomCursor />
       <BackgroundCanvas />
       <MouseGlow />
+      <ResumeModal
+        isOpen={resumeOpen}
+        onClose={() => setResumeOpen(false)}
+      />
       <CommandPalette
         isOpen={cmdOpen}
         onClose={() => setCmdOpen(false)}
         theme={theme}
         toggleTheme={toggleTheme}
+        onOpenResume={() => setResumeOpen(true)}
       />
       <Navbar
         theme={theme}
@@ -72,8 +86,8 @@ function MainContent() {
         onOpenCommandPalette={() => setCmdOpen(true)}
       />
       <main style={{ position: 'relative', zIndex: 2 }}>
-        <Hero />
-        <About />
+        <Hero onOpenResume={() => setResumeOpen(true)} />
+        <About onOpenResume={() => setResumeOpen(true)} />
         <FeaturedProjects />
         <Testimonials />
         <Projects />
@@ -82,6 +96,11 @@ function MainContent() {
         <Contact />
       </main>
       <Footer />
+      <MobileNavDock
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onOpenCommandPalette={() => setCmdOpen(true)}
+      />
     </div>
   );
 }

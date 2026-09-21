@@ -243,9 +243,35 @@
 
 @media (max-width: 640px) {
   .cmd-backdrop {
-    padding-top: 5vh;
+    padding: 0;
+    align-items: flex-end;
+  }
+  .cmd-modal {
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+    max-height: 85vh;
+  }
+  .cmd-header {
+    padding: 14px 18px;
+  }
+  .cmd-input {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+  }
+  .cmd-list {
+    max-height: 50vh;
+    padding: 8px;
+  }
+  .cmd-item {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .cmd-item-icon {
+    width: 32px;
+    height: 32px;
   }
   .cmd-footer-brand {
     display: none;
   }
 }
+
