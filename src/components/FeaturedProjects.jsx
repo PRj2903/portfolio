@@ -13,15 +13,6 @@ const FeaturedProjects = () => {
       tech: ['React', 'CSS Modules', 'GSAP Animations'],
       image: '/projects/dada-actual.png',
       link: 'https://www.dadadesignstudio.in/'
-    },
-    {
-      id: 1,
-      title: 'Wings Design',
-      category: 'Interior Design Website',
-      desc: 'An elegant, luxury-themed interior design website focusing on modern UI, sophisticated branding, and seamless user interaction animations to elevate the client digital presence.',
-      tech: ['React', 'Vite', 'Framer Motion', 'Modern UI'],
-      image: '/projects/wings-actual.png',
-      link: 'https://www.thewingsinteriordesign.live/'
     }
   ];
 

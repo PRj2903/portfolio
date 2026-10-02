@@ -16,17 +16,6 @@ const testimonialsData = [
     link: 'https://www.dadadesignstudio.in/',
   },
   {
-    id: 2,
-    client: 'Wings Design',
-    role: 'Creative Director',
-    project: 'Luxury Interior Design Showcase',
-    avatar: 'WD',
-    rating: 5,
-    quote:
-      'The interior design website Pratham engineered elevated our luxury brand presence instantly. The fluid transitions, custom hover effects, and attention to detail give our clients a world-class first impression.',
-    link: 'https://www.thewingsinteriordesign.live/',
-  },
-  {
     id: 3,
     client: 'CHARUSAT Project Review',
     role: 'Senior Faculty & Project Mentor',

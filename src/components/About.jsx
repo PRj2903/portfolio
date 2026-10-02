@@ -2,27 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './About.css';
 import {
   Smartphone,
-  Globe,
   GraduationCap,
   Clock,
   MapPin,
   Sparkles,
-  Download,
   Eye,
   Code2,
   Cpu,
-  Layers,
   Palette,
   CheckCircle2
 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import Magnetic from './Magnetic';
-import { triggerConfetti } from '../utils/confetti';
-import { useToast } from './Toast';
 
 const About = ({ onOpenResume }) => {
   const [timeString, setTimeString] = useState('');
-  const { addToast } = useToast();
 
   // Dynamic live clock for IST (India)
   useEffect(() => {
@@ -58,14 +52,6 @@ const About = ({ onOpenResume }) => {
     { name: 'MongoDB', category: 'Database' },
   ];
 
-  const handleResumeDownload = () => {
-    triggerConfetti();
-    addToast({
-      title: 'Resume Downloaded!',
-      message: 'Pratham_Jadwani_Resume.pdf download started',
-      type: 'sparkle',
-    });
-  };
 
   return (
     <section id="about" className="about-section">
@@ -99,7 +85,7 @@ const About = ({ onOpenResume }) => {
               </h3>
 
               <p className="bento-main-desc">
-                I am a Computer Science Engineer and Developer passionate about bridging engineering rigor with exceptional design. From Architecting robust cross-platform <strong>Flutter</strong> applications to delivering real-world production web platforms like <em>Dada Design Studio</em> and <em>Wings Design</em>, I build digital experiences that scale and mesmerize.
+                I am a Computer Science Engineer and Developer passionate about bridging engineering rigor with exceptional design. From Architecting robust cross-platform <strong>Flutter</strong> applications to delivering real-world production web platforms like <em>Dada Design Studio</em>, I build digital experiences that scale and mesmerize.
               </p>
 
               <div className="bento-main-actions">

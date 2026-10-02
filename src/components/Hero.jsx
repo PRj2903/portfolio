@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Download, MonitorPlay, Sparkles } from 'lucide-react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { ArrowRight, MonitorPlay, Sparkles } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import prathamImg from '../assets/pratham.jpg';
 import Magnetic from './Magnetic';
-import { triggerConfetti } from '../utils/confetti';
-import { useToast } from './Toast';
 import './Hero.css';
 
 const words = ['Flutter Developer', 'Creative Web Designer', 'CS Engineer', 'UI/UX Creator'];
@@ -13,7 +11,6 @@ const Hero = ({ onOpenResume }) => {
   const [wordIdx, setWordIdx] = useState(0);
   const [subText, setSubText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const { addToast } = useToast();
 
   useEffect(() => {
     let timer;
@@ -45,15 +42,6 @@ const Hero = ({ onOpenResume }) => {
 
     return () => clearTimeout(timer);
   }, [subText, isDeleting, wordIdx]);
-
-  const handleResumeDownload = () => {
-    triggerConfetti();
-    addToast({
-      title: 'Resume Downloaded!',
-      message: 'Pratham_Jadwani_Resume.pdf download started',
-      type: 'sparkle',
-    });
-  };
 
   const [mobileCardMode, setMobileCardMode] = useState('photo'); // 'photo' | 'code'
 

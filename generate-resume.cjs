@@ -164,20 +164,6 @@ function createResume() {
     .fillColor(secondaryColor)
     .font('Helvetica-Bold')
     .fontSize(10)
-    .text('Wings Design - Interior Design Website', 290, doc.y)
-    .fillColor(textColor)
-    .font('Helvetica')
-    .fontSize(8.5)
-    .text('• Developed an elegant, luxury-themed portfolio site for a major interior design group.', 290, doc.y)
-    .text('• Implemented fluid custom transitions and animations to showcase luxury interiors.', 290, doc.y)
-    .fillColor(lightTextColor)
-    .text('Tech: React, Vite, Framer Motion, Vanilla CSS', 290, doc.y)
-    .moveDown(0.6);
-
-  doc
-    .fillColor(secondaryColor)
-    .font('Helvetica-Bold')
-    .fontSize(10)
     .text('Dada Design Studio - Architecture Website', 290, doc.y)
     .fillColor(textColor)
     .font('Helvetica')

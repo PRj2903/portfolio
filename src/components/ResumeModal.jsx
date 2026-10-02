@@ -226,11 +226,6 @@ const ResumeModal = ({ isOpen, onClose }) => {
                       <span className="summary-proj-tag">React &bull; Live Client</span>
                     </div>
                     <div className="summary-proj-box">
-                      <h5>Wings Design</h5>
-                      <p>Luxury interior design portfolio featuring bespoke branding and fluid animations.</p>
-                      <span className="summary-proj-tag">Vite &bull; Live Client</span>
-                    </div>
-                    <div className="summary-proj-box">
                       <h5>StudyMate &amp; Ptunes</h5>
                       <p>Cross-platform Flutter educational and media player applications with dynamic theming.</p>
                       <span className="summary-proj-tag">Flutter &bull; Mobile App</span>

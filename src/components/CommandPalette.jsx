@@ -57,7 +57,7 @@ const CommandPalette = ({ isOpen, onClose, theme, toggleTheme, onOpenResume }) =
       id: 'nav-featured',
       group: 'Navigation',
       title: 'Featured Client Projects',
-      subtitle: 'Dada Design Studio & Wings Design',
+      subtitle: 'Dada Design Studio architecture showcase',
       icon: <Star size={18} />,
       action: () => {
         document.getElementById('featured')?.scrollIntoView({ behavior: 'smooth' });
@@ -236,18 +236,6 @@ const CommandPalette = ({ isOpen, onClose, theme, toggleTheme, onOpenResume }) =
       badge: 'Live',
       action: () => {
         window.open('https://www.dadadesignstudio.in/', '_blank');
-        onClose();
-      },
-    },
-    {
-      id: 'ext-wings',
-      group: 'Links & Socials',
-      title: 'Wings Design (Live Project)',
-      subtitle: 'Luxury interior design website',
-      icon: <ExternalLink size={18} />,
-      badge: 'Live',
-      action: () => {
-        window.open('https://www.thewingsinteriordesign.live/', '_blank');
         onClose();
       },
     },
