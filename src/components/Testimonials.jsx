@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Quote, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { Star, Quote, ChevronLeft, ChevronRight, MessageSquareQuote } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import './Testimonials.css';
 
@@ -16,8 +16,8 @@ const testimonialsData = [
     link: 'https://www.dadadesignstudio.in/',
   },
   {
-    id: 3,
-    client: 'CHARUSAT Project Review',
+    id: 2,
+    client: 'CHARUSAT Academic Review',
     role: 'Senior Faculty & Project Mentor',
     project: 'Full-Stack & Flutter Engineering',
     avatar: 'CH',
@@ -30,14 +30,12 @@ const testimonialsData = [
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
 
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonialsData.length);
-    }, 6000);
+    }, 7000);
     return () => clearInterval(timer);
   }, [isPaused]);
 
@@ -49,27 +47,6 @@ const Testimonials = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonialsData.length);
   };
 
-  const handleTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-    if (isLeftSwipe) {
-      handleNext();
-    } else if (isRightSwipe) {
-      handlePrev();
-    }
-  };
-
   const current = testimonialsData[currentIndex];
 
   return (
@@ -78,96 +55,71 @@ const Testimonials = () => {
         <ScrollReveal variant="fade-down">
           <div className="section-header">
             <p className="section-subtitle">
-              Client &amp; Peer Reviews <Sparkles size={16} className="gold-text" />
+              <MessageSquareQuote size={15} /> Verified Feedback
             </p>
-            <h2 className="section-title">What Collaborators Say</h2>
+            <h2 className="section-title">Client &amp; Collaborator Reviews</h2>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
           <div
-            className="testimonial-carousel-container"
+            className="testimonial-card-frame glass-panel"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
           >
-            <div
-              className="testimonial-card glass-panel spotlight-card"
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-              }}
-            >
-              {/* Quote Icon Tag */}
-              <div className="quote-badge indigo-text">
-                <Quote size={28} />
+            <div className="testimonial-header-row">
+              <div className="quote-mark-badge">
+                <Quote size={20} className="indigo-text" />
               </div>
-
-              {/* Star Rating */}
               <div className="star-rating">
                 {Array.from({ length: current.rating }).map((_, i) => (
-                  <Star key={i} size={18} className="gold-text fill-gold" fill="#f59e0b" />
+                  <Star key={i} size={16} fill="#b45309" color="#b45309" />
                 ))}
-              </div>
-
-              {/* Quote Text */}
-              <p className="testimonial-quote">&ldquo;{current.quote}&rdquo;</p>
-
-              {/* Client Info & Project Tag */}
-              <div className="testimonial-footer">
-                <div className="client-info-group">
-                  <div className="client-avatar">{current.avatar}</div>
-                  <div>
-                    <h4 className="client-name">{current.client}</h4>
-                    <p className="client-role">{current.role}</p>
-                  </div>
-                </div>
-
-                {current.link ? (
-                  <a
-                    href={current.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-outline testimonial-link-btn"
-                  >
-                    View Project
-                  </a>
-                ) : (
-                  <span className="project-tag">{current.project}</span>
-                )}
               </div>
             </div>
 
-            {/* Carousel Controls */}
-            <div className="carousel-controls">
-              <button
-                onClick={handlePrev}
-                className="carousel-btn"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft size={22} />
-              </button>
+            <p className="testimonial-body serif-italic">
+              &ldquo;{current.quote}&rdquo;
+            </p>
 
-              <div className="carousel-dots">
+            <div className="testimonial-footer-row">
+              <div className="author-meta">
+                <div className="author-avatar">{current.avatar}</div>
+                <div>
+                  <h4 className="author-name">{current.client}</h4>
+                  <p className="author-role">{current.role} &bull; <span className="author-project">{current.project}</span></p>
+                </div>
+              </div>
+
+              {current.link && (
+                <a
+                  href={current.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-outline testimonial-link-btn"
+                >
+                  Visit Client Project
+                </a>
+              )}
+            </div>
+
+            {/* Controls */}
+            <div className="testimonial-nav-bar">
+              <button onClick={handlePrev} className="test-nav-btn" aria-label="Previous review">
+                <ChevronLeft size={18} />
+              </button>
+              <div className="test-dots">
                 {testimonialsData.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`carousel-dot ${idx === currentIndex ? 'active' : ''}`}
+                    className={`test-dot ${idx === currentIndex ? 'active' : ''}`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}
               </div>
-
-              <button
-                onClick={handleNext}
-                className="carousel-btn"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight size={22} />
+              <button onClick={handleNext} className="test-nav-btn" aria-label="Next review">
+                <ChevronRight size={18} />
               </button>
             </div>
           </div>

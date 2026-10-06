@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun, Search, Command } from 'lucide-react';
+import { Menu, X, Moon, Sun, Search } from 'lucide-react';
 import Magnetic from './Magnetic';
 import './Navbar.css';
 
@@ -44,6 +44,7 @@ const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
           PRATHAM<span className="logo-dot">.</span>
         </a>
 
+        {/* Desktop Navigation */}
         <div className="nav-links desktop-only">
           {navLinks.map((link) => (
             <a key={link.name} href={link.href} className="nav-link">
@@ -51,7 +52,7 @@ const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
             </a>
           ))}
           
-          {/* Command Palette Trigger Button */}
+          {/* Command Palette Trigger Button (Pill button) */}
           <button
             onClick={onOpenCommandPalette}
             className="cmd-trigger-btn"
@@ -65,7 +66,7 @@ const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
 
           <div className="nav-actions">
             <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme" title="Toggle Theme">
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
             <Magnetic strength={12}>
               <a href="#contact" className="btn btn-primary nav-btn">Let&apos;s Talk</a>
@@ -73,24 +74,17 @@ const Navbar = ({ theme, toggleTheme, onOpenCommandPalette }) => {
           </div>
         </div>
 
+        {/* Mobile Header Controls (Only on viewport < 768px) */}
         <div className="mobile-only mobile-controls">
-          <button
-            onClick={onOpenCommandPalette}
-            className="theme-toggle-btn"
-            aria-label="Open Command Palette"
-            title="Search"
-          >
-            <Search size={18} />
-          </button>
-          <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme">
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+          <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme" title="Toggle Theme">
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
           <button 
             className="mobile-menu-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Menu"
           >
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>

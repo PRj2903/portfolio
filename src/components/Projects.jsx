@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Projects.css';
-import { PlayCircle, Smartphone, HelpCircle } from 'lucide-react';
+import { Smartphone, Sparkles, ArrowUpRight } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import ScrollReveal from './ScrollReveal';
 
@@ -9,131 +9,100 @@ const Projects = () => {
     {
       id: 1,
       title: 'StudyMate',
-      desc: 'A comprehensive educational companion app streamlining study schedules, resources, and progress tracking for students.',
-      tech: ['Flutter', 'Spring Boot', 'REST API'],
-      github: '#',
-      demo: '#'
+      category: 'Education & Productivity',
+      desc: 'A student companion application streamlining academic schedules, study timers, and course progress tracking with clean state architecture.',
+      tech: ['Flutter', 'Spring Boot', 'REST API', 'Provider'],
+      github: 'https://github.com/PRj2903',
+      demo: null
     },
     {
       id: 2,
       title: 'Ptunes Music Player',
-      desc: 'An aesthetically pleasing, feature-rich music player application with dynamic theming and background play capabilities.',
-      tech: ['Flutter', 'Audio Service', 'Hive Database'],
-      github: '#',
+      category: 'Audio Streaming & Offline Player',
+      desc: 'An aesthetically refined mobile music player featuring dynamic audio visualizers, background playback service, and offline Hive local caching.',
+      tech: ['Flutter', 'Audio Service', 'Hive DB', 'BLoC'],
+      github: 'https://github.com/PRj2903',
       demo: null
     },
     {
       id: 3,
       title: 'Flashcard Learning App',
-      desc: 'An interactive flashcard application leveraging spaced repetition algorithms and cloud-synced user progression.',
-      tech: ['Flutter', 'Firebase', 'Cloud Firestore'],
-      github: '#',
-      demo: '#'
+      category: 'EdTech & Spaced Repetition',
+      desc: 'An interactive spaced repetition learning tool with customizable flashcard decks, cloud sync, and retention analytics.',
+      tech: ['Flutter', 'Firebase Firestore', 'Cloud Sync'],
+      github: 'https://github.com/PRj2903',
+      demo: null
     },
     {
-      id: 'dev',
+      id: 4,
       isPlaceholder: true,
-      title: 'More Projects Under Development',
-      desc: 'More premium Android & Flutter applications are in active design and code development stages. Check back soon!',
-      tech: ['Android SDK', 'Flutter', 'Kotlin', 'Material 3']
+      title: 'Upcoming Flutter & Android Apps',
+      category: 'In Active Development',
+      desc: 'New cross-platform mobile apps featuring Material 3 theming, offline-first architectures, and high-performance canvas UI are currently in engineering.',
+      tech: ['Android SDK', 'Flutter', 'Kotlin', 'Material 3'],
+      github: 'https://github.com/PRj2903',
+      demo: null
     }
   ];
-
-  // Track hover rotation states per project ID
-  const [rotations, setRotations] = useState({});
-
-  const handleMouseMove = (e, id) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    const dx = x - xc;
-    const dy = y - yc;
-    
-    // Calculate rotation degree (max 8deg)
-    const rotX = (dy / yc) * -8;
-    const rotY = (dx / xc) * 8;
-    
-    setRotations((prev) => ({
-      ...prev,
-      [id]: { x: rotX, y: rotY }
-    }));
-
-    // Spotlight cursor custom variables
-    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-  };
-
-  const handleMouseLeave = (id) => {
-    setRotations((prev) => ({
-      ...prev,
-      [id]: { x: 0, y: 0 }
-    }));
-  };
 
   return (
     <section id="projects" className="projects-section">
       <div className="container">
         <ScrollReveal variant="fade-down">
           <div className="section-header">
-            <p className="section-subtitle">App Development</p>
-            <h2 className="section-title">Mobile Projects</h2>
+            <p className="section-subtitle">
+              <Smartphone size={15} /> Mobile Engineering Portfolio
+            </p>
+            <h2 className="section-title">Flutter &amp; Mobile Applications</h2>
           </div>
         </ScrollReveal>
 
         <div className="app-grid">
-          {appProjects.map((project, index) => {
-            const rot = rotations[project.id] || { x: 0, y: 0 };
-            return (
-              <ScrollReveal delay={index * 80} variant="zoom-in" key={project.id}>
-                <div 
-                  className={`app-card glass-panel spotlight-card ${project.isPlaceholder ? 'placeholder-card' : ''}`}
-                  onMouseMove={(e) => handleMouseMove(e, project.id)}
-                  onMouseLeave={() => handleMouseLeave(project.id)}
-                  style={{
-                    transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg) scale3d(1.02, 1.02, 1.02)`,
-                    transition: 'transform 0.15s ease-out, border-color 0.4s ease'
-                  }}
-                >
-                  <div className="app-card-header">
-                    <div className="app-icon-wrapper">
-                      {project.isPlaceholder ? (
-                        <HelpCircle className="gold-text" size={32} style={{ animation: 'spin-slow 10s infinite linear' }} />
-                      ) : (
-                        <Smartphone className="indigo-text" size={32} />
-                      )}
-                    </div>
-                    {!project.isPlaceholder && (
-                      <div className="app-links">
-                        {project.github && (
-                          <a href={project.github} className="app-link" aria-label="GitHub Repository">
-                            <FaGithub size={22} />
-                          </a>
-                        )}
-                        {project.demo && (
-                          <a href={project.demo} className="app-link" aria-label="Live Demo">
-                            <PlayCircle size={24} />
-                          </a>
-                        )}
-                      </div>
+          {appProjects.map((project, index) => (
+            <ScrollReveal delay={index * 80} variant="fade-up" key={project.id}>
+              <div className={`app-card glass-panel ${project.isPlaceholder ? 'placeholder-card' : ''}`}>
+                <div className="app-card-top">
+                  <div className="app-icon-box">
+                    {project.isPlaceholder ? (
+                      <Sparkles size={18} className="gold-text" />
+                    ) : (
+                      <Smartphone size={18} className="indigo-text" />
                     )}
                   </div>
-                  
-                  <div className="app-info">
-                    <h3 className="app-title">{project.title}</h3>
-                    <p className="app-desc">{project.desc}</p>
-                  </div>
-                  
-                  <div className="app-tech">
+                  <span className="app-category-pill">{project.category}</span>
+                </div>
+                
+                <div className="app-card-body">
+                  <h3 className="app-title">{project.title}</h3>
+                  <p className="app-desc">{project.desc}</p>
+                </div>
+                
+                <div className="app-card-footer">
+                  <div className="app-tech-list">
                     {project.tech.map((t, idx) => (
                       <span key={idx} className="tech-tag">{t}</span>
                     ))}
                   </div>
+
+                  {project.github && (
+                    <div className="app-actions-row">
+                      <a 
+                        href={project.github} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="app-source-link"
+                        title="View Source on GitHub"
+                      >
+                        <FaGithub size={15} />
+                        <span>Source Code</span>
+                        <ArrowUpRight size={13} />
+                      </a>
+                    </div>
+                  )}
                 </div>
-              </ScrollReveal>
-            );
-          })}
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>

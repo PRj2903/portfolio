@@ -3,13 +3,13 @@ import './Contact.css';
 import { Mail, MapPin, Phone, CheckCircle, AlertCircle, Copy, Check, Send, Sparkles } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import ScrollReveal from './ScrollReveal';
-import Magnetic from './Magnetic';
 import { triggerConfetti } from '../utils/confetti';
 import { useToast } from './Toast';
 
 const Contact = () => {
   const form = useRef();
   const [status, setStatus] = useState(''); // '', 'sending', 'success', 'error'
+  const [errorMessage, setErrorMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const { addToast } = useToast();
@@ -18,7 +18,7 @@ const Contact = () => {
     navigator.clipboard.writeText('Jpratham9716@gmail.com');
     setCopiedEmail(true);
     addToast({
-      title: 'Email Copied!',
+      title: 'Email Copied',
       message: 'Jpratham9716@gmail.com copied to clipboard',
       type: 'success',
     });
@@ -29,7 +29,7 @@ const Contact = () => {
     navigator.clipboard.writeText('+919722768555');
     setCopiedPhone(true);
     addToast({
-      title: 'Phone Number Copied!',
+      title: 'Phone Copied',
       message: '+91 9722768555 copied to clipboard',
       type: 'success',
     });
@@ -41,6 +41,7 @@ const Contact = () => {
   const sendEmail = async (e) => {
     e.preventDefault();
     setStatus('sending');
+    setErrorMessage('');
 
     const formData = new FormData(form.current);
     const data = {
@@ -51,6 +52,10 @@ const Contact = () => {
     };
     setLastSubmission(data);
 
+    // 8-second timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -58,7 +63,9 @@ const Contact = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       const result = await response.json().catch(() => ({}));
 
@@ -68,27 +75,30 @@ const Contact = () => {
         setLastSubmission(null);
         triggerConfetti();
         addToast({
-          title: 'Message Sent Successfully!',
-          message: 'Your message has been delivered to Pratham\'s inbox.',
+          title: 'Message Delivered',
+          message: 'Your inquiry has been sent directly to Pratham.',
           type: 'sparkle',
           duration: 6000,
         });
         setTimeout(() => setStatus(''), 8000);
       } else {
         setStatus('error');
+        setErrorMessage(result.error || 'Server is unavailable.');
         addToast({
-          title: 'Submission Issue',
-          message: result.error || 'Server is busy. Click the fallback button below to send directly.',
+          title: 'Direct Dispatch Ready',
+          message: 'Click below to send via your Email app or WhatsApp.',
           type: 'error',
           duration: 6000,
         });
       }
     } catch (error) {
-      console.error('API submission failed:', error);
+      clearTimeout(timeoutId);
+      console.error('API submission notice:', error);
       setStatus('error');
+      setErrorMessage(error.name === 'AbortError' ? 'Connection timed out.' : 'Server offline.');
       addToast({
-        title: 'Direct Dispatch Available',
-        message: 'Click below to dispatch directly via your Email app or WhatsApp.',
+        title: 'Direct Dispatch Ready',
+        message: 'Click below to send via your Email app or WhatsApp.',
         type: 'error',
         duration: 6000,
       });
@@ -117,121 +127,104 @@ const Contact = () => {
         <ScrollReveal variant="fade-down">
           <div className="section-header">
             <p className="section-subtitle">
-              Get In Touch <Sparkles size={16} className="gold-text" />
+              <Sparkles size={15} /> Open Communications
             </p>
-            <h2 className="section-title">Let&apos;s Build Something Great</h2>
+            <h2 className="section-title">Let&apos;s Build Something Extraordinary</h2>
           </div>
         </ScrollReveal>
 
-        <div className="contact-content">
-          {/* Left: Contact Info & Quick Copy Badges */}
-          <ScrollReveal className="contact-info">
-            <div>
-              <h3 className="contact-subtitle">Direct Reach &amp; Information</h3>
-              <p className="contact-desc">
-                Whether you need a full-scale <strong>Flutter mobile application</strong>, a luxury bespoke <strong>client website</strong>, or an engineering collaboration, my inbox is always open.
+        <div className="contact-content-grid">
+          {/* Left: Contact Channels */}
+          <ScrollReveal className="contact-info-panel">
+            <div className="contact-info-inner">
+              <h3 className="contact-panel-title">Direct Reach &amp; Inquiry</h3>
+              <p className="contact-panel-desc">
+                Whether you are looking to build a high-performance <strong>Flutter mobile app</strong>, architect a bespoke <strong>client website</strong>, or discuss engineering roles, feel free to reach out.
               </p>
 
-              <div className="contact-methods">
-                {/* Email Item with 1-click copy */}
-                <div className="method-item glass-panel spotlight-card"
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                  }}
-                >
-                  <div className="method-icon indigo-text"><Mail size={22} /></div>
-                  <div className="method-text-group">
-                    <h4 className="method-title">Email Address</h4>
-                    <a href="mailto:Jpratham9716@gmail.com" className="method-value">
+              <div className="contact-methods-stack">
+                {/* Email Item */}
+                <div className="contact-channel-card glass-panel">
+                  <div className="channel-icon-box">
+                    <Mail size={18} className="indigo-text" />
+                  </div>
+                  <div className="channel-text">
+                    <span className="channel-label">Email Direct</span>
+                    <a href="mailto:Jpratham9716@gmail.com" className="channel-value">
                       Jpratham9716@gmail.com
                     </a>
                   </div>
                   <button
                     onClick={handleCopyEmail}
-                    className="copy-badge-btn"
+                    className="copy-channel-btn"
                     title="Copy Email"
                     aria-label="Copy Email"
                   >
-                    {copiedEmail ? <Check size={16} className="text-emerald" /> : <Copy size={16} />}
+                    {copiedEmail ? <Check size={15} className="text-emerald" /> : <Copy size={15} />}
                   </button>
                 </div>
 
-                {/* Phone & WhatsApp Item with 1-click WhatsApp & copy */}
-                <div className="method-item glass-panel spotlight-card"
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                  }}
-                >
-                  <div className="method-icon indigo-text"><Phone size={22} /></div>
-                  <div className="method-text-group">
-                    <div className="method-title-row">
-                      <h4 className="method-title">Phone &amp; WhatsApp</h4>
-                      <span className="whatsapp-tag">
-                        <FaWhatsapp size={12} style={{ marginRight: '4px' }} /> WhatsApp
+                {/* WhatsApp & Phone Item */}
+                <div className="contact-channel-card glass-panel">
+                  <div className="channel-icon-box">
+                    <Phone size={18} className="indigo-text" />
+                  </div>
+                  <div className="channel-text">
+                    <div className="channel-label-row">
+                      <span className="channel-label">Phone &amp; WhatsApp</span>
+                      <span className="wa-chip">
+                        <FaWhatsapp size={11} /> Fast Reply
                       </span>
                     </div>
-                    <a href="tel:+919722768555" className="method-value">
+                    <a href="tel:+919722768555" className="channel-value">
                       +91 9722768555
                     </a>
                   </div>
-                  <div className="method-actions">
+                  <div className="channel-actions">
                     <a
                       href="https://wa.me/919722768555?text=Hi%20Pratham,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="copy-badge-btn whatsapp-action-btn"
-                      title="Chat on WhatsApp (+91 9722768555)"
+                      className="copy-channel-btn wa-btn"
+                      title="Chat on WhatsApp"
                       aria-label="Chat on WhatsApp"
                     >
-                      <FaWhatsapp size={18} />
+                      <FaWhatsapp size={16} />
                     </a>
                     <button
                       onClick={handleCopyPhone}
-                      className="copy-badge-btn"
-                      title="Copy Phone Number"
-                      aria-label="Copy Phone Number"
+                      className="copy-channel-btn"
+                      title="Copy Phone"
+                      aria-label="Copy Phone"
                     >
-                      {copiedPhone ? <Check size={16} className="text-emerald" /> : <Copy size={16} />}
+                      {copiedPhone ? <Check size={15} className="text-emerald" /> : <Copy size={15} />}
                     </button>
                   </div>
                 </div>
 
                 {/* Location Item */}
-                <div className="method-item glass-panel spotlight-card"
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                  }}
-                >
-                  <div className="method-icon indigo-text"><MapPin size={22} /></div>
-                  <div className="method-text-group">
-                    <h4 className="method-title">Location</h4>
-                    <p className="method-value">Surat, Gujarat, India (Open to Remote)</p>
+                <div className="contact-channel-card glass-panel">
+                  <div className="channel-icon-box">
+                    <MapPin size={18} className="indigo-text" />
+                  </div>
+                  <div className="channel-text">
+                    <span className="channel-label">Location</span>
+                    <p className="channel-value">Surat, Gujarat, India (Open to Remote)</p>
                   </div>
                 </div>
               </div>
             </div>
           </ScrollReveal>
 
-          {/* Right: Interactive Contact Form */}
-          <ScrollReveal delay={100} className="contact-form-wrapper">
+          {/* Right: Contact Form */}
+          <ScrollReveal delay={100} className="contact-form-panel">
             <form
               ref={form}
               onSubmit={sendEmail}
-              className="contact-form glass-panel spotlight-card"
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-              }}
+              className="editorial-form glass-panel"
             >
-              <div className="form-row">
-                <div className="form-group">
+              <div className="form-fields-row">
+                <div className="form-field-group">
                   <label htmlFor="user_name">Your Name</label>
                   <input
                     type="text"
@@ -241,7 +234,7 @@ const Contact = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-field-group">
                   <label htmlFor="user_email">Your Email</label>
                   <input
                     type="email"
@@ -253,69 +246,68 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="subject">Subject</label>
+              <div className="form-field-group">
+                <label htmlFor="subject">Subject / Project Scope</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
-                  placeholder="Mobile App Project / Client Website Inquiry"
+                  placeholder="Mobile App / Client Website Project"
                   required
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-field-group">
                 <label htmlFor="message">Message</label>
                 <textarea
                   id="message"
                   name="message"
                   rows="5"
-                  placeholder="Describe your project vision, timeline, or requirements..."
+                  placeholder="Describe your project vision, timeline, or engineering inquiry..."
                   required
                 ></textarea>
               </div>
 
-              <Magnetic strength={20}>
-                <button
-                  type="submit"
-                  className="btn btn-primary submit-btn"
-                  disabled={status === 'sending'}
-                >
-                  {status === 'sending' ? (
-                    'Sending Transmission...'
-                  ) : (
-                    <>
-                      Send Message <Send size={18} style={{ marginLeft: '8px' }} />
-                    </>
-                  )}
-                </button>
-              </Magnetic>
+              <button
+                type="submit"
+                className="btn btn-primary submit-channel-btn"
+                disabled={status === 'sending'}
+              >
+                {status === 'sending' ? (
+                  'Dispatching...'
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <Send size={16} />
+                  </>
+                )}
+              </button>
 
               {status === 'success' && (
-                <div className="status-msg success">
-                  <CheckCircle size={18} /> Message sent successfully! I will reply soon.
+                <div className="form-status-alert success">
+                  <CheckCircle size={16} /> Message sent successfully! I will get back to you promptly.
                 </div>
               )}
 
               {status === 'error' && (
-                <div className="status-msg error">
-                  <div className="status-error-header">
-                    <AlertCircle size={18} /> Server unreachable. Send directly via:
+                <div className="form-status-alert error">
+                  <div className="error-alert-header">
+                    <AlertCircle size={16} /> {errorMessage || 'Server unreachable'}. Dispatch directly:
                   </div>
-                  <div className="status-error-actions">
+                  <div className="fallback-actions-row">
                     <button
                       type="button"
                       onClick={openDirectEmail}
-                      className="fallback-btn email-fallback-btn"
+                      className="fallback-dispatch-btn"
                     >
-                      <Mail size={15} /> Open Mail App
+                      <Mail size={14} /> Open in Mail App
                     </button>
                     <button
                       type="button"
                       onClick={openDirectWhatsApp}
-                      className="fallback-btn wa-fallback-btn"
+                      className="fallback-dispatch-btn"
                     >
-                      <FaWhatsapp size={15} /> WhatsApp
+                      <FaWhatsapp size={14} /> Send via WhatsApp
                     </button>
                   </div>
                 </div>

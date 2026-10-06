@@ -46,7 +46,9 @@ const Magnetic = ({
       ref={ref}
       className={`magnetic-wrapper ${className}`}
       style={{
-        display: 'inline-block',
+        display: 'inline-flex',
+        alignItems: 'center',
+        verticalAlign: 'middle',
         transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
         transition: isHovering ? 'transform 0.15s ease-out' : 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         willChange: 'transform',

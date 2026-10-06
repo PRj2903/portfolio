@@ -9,9 +9,6 @@ import GitHubStats from './components/GitHubStats';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import BackgroundCanvas from './components/BackgroundCanvas';
-import MouseGlow from './components/MouseGlow';
-import CustomCursor from './components/CustomCursor';
 import CommandPalette from './components/CommandPalette';
 import { ToastProvider } from './components/Toast';
 import MobileNavDock from './components/MobileNavDock';
@@ -20,10 +17,11 @@ import './App.css';
 
 function MainContent() {
   const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('portfolio-theme');
+      if (stored) return stored;
     }
-    return 'light';
+    return 'light'; // Clean light theme default
   });
 
   const [cmdOpen, setCmdOpen] = useState(false);
@@ -32,6 +30,9 @@ function MainContent() {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('portfolio-theme', newTheme);
+    }
   };
 
   useEffect(() => {
@@ -39,12 +40,6 @@ function MainContent() {
   }, [theme]);
 
   useEffect(() => {
-    // Set up global mousemove tracking for card spotlight styling
-    const handleMouseMove = (e) => {
-      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
-    };
-
     const handleCustomOpenCmd = () => {
       setCmdOpen(true);
     };
@@ -53,12 +48,10 @@ function MainContent() {
       setResumeOpen(true);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('open-command-palette', handleCustomOpenCmd);
     document.addEventListener('open-resume-modal', handleCustomOpenResume);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('open-command-palette', handleCustomOpenCmd);
       document.removeEventListener('open-resume-modal', handleCustomOpenResume);
     };
@@ -66,9 +59,6 @@ function MainContent() {
 
   return (
     <div className="app-container">
-      <CustomCursor />
-      <BackgroundCanvas />
-      <MouseGlow />
       <ResumeModal
         isOpen={resumeOpen}
         onClose={() => setResumeOpen(false)}
@@ -85,7 +75,7 @@ function MainContent() {
         toggleTheme={toggleTheme}
         onOpenCommandPalette={() => setCmdOpen(true)}
       />
-      <main style={{ position: 'relative', zIndex: 2 }}>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         <Hero onOpenResume={() => setResumeOpen(true)} />
         <About onOpenResume={() => setResumeOpen(true)} />
         <FeaturedProjects />

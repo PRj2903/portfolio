@@ -1,163 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, MonitorPlay, Sparkles } from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import React from 'react';
+import { ArrowUpRight, FileText, Sparkles, Terminal, Globe } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import prathamImg from '../assets/pratham.jpg';
 import Magnetic from './Magnetic';
 import './Hero.css';
 
-const words = ['Flutter Developer', 'Creative Web Designer', 'CS Engineer', 'UI/UX Creator'];
-
 const Hero = ({ onOpenResume }) => {
-  const [wordIdx, setWordIdx] = useState(0);
-  const [subText, setSubText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let timer;
-    const currentWord = words[wordIdx];
-    
-    const tick = () => {
-      if (!isDeleting) {
-        setSubText(currentWord.substring(0, subText.length + 1));
-        if (subText.length + 1 === currentWord.length) {
-          timer = setTimeout(() => setIsDeleting(true), 2000);
-        } else {
-          timer = setTimeout(tick, 100);
-        }
-      } else {
-        setSubText(currentWord.substring(0, subText.length - 1));
-        if (subText.length - 1 === 0) {
-          setIsDeleting(false);
-          setWordIdx((prev) => (prev + 1) % words.length);
-          timer = setTimeout(tick, 300);
-        } else {
-          timer = setTimeout(tick, 50);
-        }
-      }
-    };
-
-    if (!timer) {
-      timer = setTimeout(tick, 100);
-    }
-
-    return () => clearTimeout(timer);
-  }, [subText, isDeleting, wordIdx]);
-
-  const [mobileCardMode, setMobileCardMode] = useState('photo'); // 'photo' | 'code'
-
   return (
     <section id="home" className="hero-section">
-      <div className="hero-background">
-        <div className="gradient-sphere sphere-primary"></div>
-        <div className="gradient-sphere sphere-gold"></div>
-      </div>
-      
       <div className="container hero-content">
         <div className="hero-text animate-fade-in">
-          <div className="hero-status-pill">
-            <span className="pulse-dot"></span>
-            <span>Available for Freelance &amp; Roles</span>
+          <div className="studio-index-tag">
+            <span className="studio-dot"></span>
+            <span>PRATHAM JADWANI // 2026 PORTFOLIO</span>
           </div>
 
-          <p className="hero-greeting indigo-text">Hi, I am</p>
           <h1 className="hero-title">
-            Pratham Jadwani
+            FLUTTER DEVELOPER &amp; <span className="highlight-text">CREATIVE DESIGNER.</span>
           </h1>
-          <h2 className="hero-subtitle">
-            <span className="text-typing">{subText}</span>
-            <span className="typing-cursor">|</span>
-          </h2>
+
           <p className="hero-description">
-            Bridging the gap between high-performance mobile applications and premium, real-world client websites. I deliver production-ready, beautifully crafted digital experiences.
+            Computer Science Engineer building precision mobile applications (Flutter, 60fps) and bespoke, high-conversion web platforms like <em>Dada Design Studio</em>.
           </p>
           
           <div className="hero-cta-group">
-            <Magnetic strength={15}>
+            <Magnetic strength={10}>
               <a href="#featured" className="btn btn-primary cta-btn">
-                View Projects <ArrowRight className="btn-icon" size={18} />
+                <span>EXPLORE WORK</span>
+                <ArrowUpRight size={18} />
               </a>
             </Magnetic>
-            <Magnetic strength={15}>
+            <Magnetic strength={10}>
               <button
                 onClick={onOpenResume}
                 className="btn btn-outline cta-btn"
-                title="Preview Resume PDF In-Browser"
+                title="Preview Verified Resume"
               >
-                Preview Resume <Sparkles className="btn-icon gold-text" size={18} />
+                <FileText size={16} />
+                <span>RESUME (PDF)</span>
               </button>
             </Magnetic>
-            <Magnetic strength={15}>
-              <a href="#featured" className="btn btn-gold cta-btn">
-                View Live Work <MonitorPlay className="btn-icon" size={18} />
+            <Magnetic strength={10}>
+              <a href="#contact" className="btn btn-gold cta-btn">
+                <span>LET&apos;S TALK</span>
               </a>
             </Magnetic>
           </div>
 
-          <div className="social-links-hero mt-4">
-            <Magnetic strength={18}>
-              <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" className="social-link" title="GitHub" aria-label="GitHub Profile">
-                <FaGithub size={24} />
-              </a>
-            </Magnetic>
-            <Magnetic strength={18}>
-              <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" className="social-link" title="LinkedIn" aria-label="LinkedIn Profile">
-                <FaLinkedin size={24} />
-              </a>
-            </Magnetic>
-            <Magnetic strength={18}>
-              <a href="https://wa.me/919722768555?text=Hi%20Pratham,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank" rel="noreferrer" className="social-link" title="WhatsApp" aria-label="WhatsApp Contact">
-                <Sparkles size={22} className="gold-text" />
-              </a>
-            </Magnetic>
+          <div className="studio-meta-bar">
+            <div className="studio-meta-col">
+              <span className="meta-head">DISCIPLINES</span>
+              <span className="meta-val">Mobile App &bull; Web Architecture</span>
+            </div>
+            <div className="studio-meta-col">
+              <span className="meta-head">ACADEMICS</span>
+              <span className="meta-val">B.Tech 7.58 &bull; Diploma 8.89</span>
+            </div>
+            <div className="studio-meta-col">
+              <span className="meta-head">AVAILABILITY</span>
+              <span className="meta-val text-available">● OPEN FOR ROLES</span>
+            </div>
           </div>
         </div>
         
         <div className="hero-visual animate-fade-in">
-          <div
-            className={`glass-card portrait-card spotlight-card ${mobileCardMode === 'code' ? 'show-code-mobile' : ''}`}
-            onClick={() => setMobileCardMode(prev => prev === 'photo' ? 'code' : 'photo')}
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-              e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-            }}
-          >
-            {/* Mock IDE/Terminal */}
-            <div className="mock-terminal-header">
-              <span className="dot dot-red"></span>
-              <span className="dot dot-yellow"></span>
-              <span className="dot dot-green"></span>
-              <span className="terminal-title">developer_profile.json</span>
-              <span className="mobile-tap-hint">Tap to flip</span>
+          <div className="studio-portrait-card">
+            <div className="card-studio-header">
+              <span className="studio-serial">ID #PRJ-2903</span>
+              <span className="studio-badge-pill">SURAT, IN</span>
             </div>
-            <div className="mock-terminal-body">
-              <pre>
-                <code>
-{`{
-  "name": `}<span className="code-string">"Pratham Jadwani"</span>{`,
-  "role": `}<span className="code-string">"Developer"</span>{`,
-  "specialties": [
-    `}<span className="code-string">"Flutter Mobile App"</span>{`,
-    `}<span className="code-string">"Premium Web UI"</span>
-  {`],
-  "cgpa": `}<span className="code-number">8.89</span>{`,
-  "status": `}<span className="code-string">"Active"</span>
-{`}`}
-                </code>
-              </pre>
+
+            <div className="studio-img-container">
+              <img src={prathamImg} alt="Pratham Jadwani" className="studio-img" />
+              <div className="studio-stamp-badge">
+                <span>ENGINEER</span>
+              </div>
             </div>
-            
-            <div className="portrait-inner">
-              <img src={prathamImg} alt="Pratham Jadwani" className="portrait-img" />
-            </div>
-            
-            <div className="floating-badge badge-1 glass-panel">
-              <span className="indigo-text">Flutter</span> Expert
-            </div>
-            <div className="floating-badge badge-2 glass-panel">
-              <span className="gold-text">Web</span> Designer
+
+            <div className="card-studio-bottom">
+              <div className="studio-deliverable-box">
+                <span className="box-label">LIVE DELIVERABLE</span>
+                <a href="https://www.dadadesignstudio.in/" target="_blank" rel="noreferrer" className="box-title">
+                  <span>Dada Design Studio</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </div>
+              <div className="studio-social-row">
+                <a href="https://github.com/PRj2903" target="_blank" rel="noreferrer" aria-label="GitHub">
+                  <FaGithub size={18} />
+                </a>
+                <a href="https://www.linkedin.com/in/pratham-jadwani-a5b19225a" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                  <FaLinkedin size={18} />
+                </a>
+                <a href="https://wa.me/919722768555" target="_blank" rel="noreferrer" aria-label="WhatsApp">
+                  <FaWhatsapp size={18} />
+                </a>
+              </div>
             </div>
           </div>
         </div>

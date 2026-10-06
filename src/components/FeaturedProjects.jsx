@@ -1,109 +1,106 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FeaturedProjects.css';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, CheckCircle2, Globe, Layers, ArrowRight } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 const FeaturedProjects = () => {
   const featured = [
     {
-      id: 2,
-      title: 'Dada Design Studio',
-      category: 'Architecture Website',
-      desc: 'A professional architecture portfolio tailored for Dada Design Studio. It features a clean, white and indigo layout with a minimalist project showcase emphasizing structural aesthetics.',
-      tech: ['React', 'CSS Modules', 'GSAP Animations'],
+      id: 'dada-design',
+      index: '01',
+      title: 'DADA DESIGN STUDIO',
+      clientType: 'Architecture & Spatial Design Practice',
+      tagline: 'A bespoke digital monograph reflecting minimalist structural aesthetics.',
+      desc: 'Architected and engineered a comprehensive, production-deployed portfolio for Dada Design Studio. Emphasizes structural minimalism, architectural grid hierarchy, and fluid transitions tailored for high-end clientele.',
+      highlights: [
+        'Curated spatial project galleries with responsive grid transitions',
+        'Refined monochromatic typography tailored for design discerning clientele',
+        'Blazing fast performance with custom CSS layout engineering'
+      ],
+      tech: ['REACT.JS', 'CSS MODULES', 'GSAP MOTION', 'RESPONSIVE UI'],
       image: '/projects/dada-actual.png',
       link: 'https://www.dadadesignstudio.in/'
     }
   ];
-
-  // Track hover rotation states per project ID
-  const [rotations, setRotations] = useState({});
-
-  const handleMouseMove = (e, id) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    const dx = x - xc;
-    const dy = y - yc;
-    
-    // Calculate rotation degree (max 8deg)
-    const rotX = (dy / yc) * -8;
-    const rotY = (dx / xc) * 8;
-    
-    setRotations((prev) => ({
-      ...prev,
-      [id]: { x: rotX, y: rotY }
-    }));
-
-    // Spotlight cursor custom variables
-    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-  };
-
-  const handleMouseLeave = (id) => {
-    setRotations((prev) => ({
-      ...prev,
-      [id]: { x: 0, y: 0 }
-    }));
-  };
 
   return (
     <section id="featured" className="featured-section">
       <div className="container">
         <ScrollReveal variant="fade-down">
           <div className="section-header">
-            <p className="section-subtitle">Client Work <span className="gold-text">⭐</span></p>
-            <h2 className="section-title">Featured Live Projects</h2>
+            <p className="section-subtitle">
+              <span>CASE STUDIES // 01</span>
+            </p>
+            <h2 className="section-title">FEATURED CLIENT WORK</h2>
           </div>
         </ScrollReveal>
 
-        <div className="featured-grid">
-          {featured.map((project, index) => {
-            const rot = rotations[project.id] || { x: 0, y: 0 };
-            return (
-              <ScrollReveal delay={index * 120} variant={index % 2 === 0 ? 'fade-right' : 'fade-left'} key={project.id}>
-                <div 
-                  className="featured-card glass-panel spotlight-card"
-                  onMouseMove={(e) => handleMouseMove(e, project.id)}
-                  onMouseLeave={() => handleMouseLeave(project.id)}
-                  style={{
-                    transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg) scale3d(1.01, 1.01, 1.01)`,
-                    transition: 'transform 0.15s ease-out, border-color 0.4s ease'
-                  }}
-                >
-                  <div className="featured-image-container">
-                    <div 
-                      className="featured-image" 
-                      style={{ backgroundImage: `url(${project.image})` }}
-                    ></div>
-                    <div className="featured-overlay">
-                      <a href={project.link} className="btn btn-gold btn-view-live">
-                        View Live <ExternalLink size={18} style={{marginLeft: '8px'}} />
-                      </a>
-                    </div>
+        <div className="studio-showcase-grid">
+          {featured.map((project) => (
+            <ScrollReveal delay={100} key={project.id}>
+              <div className="studio-case-card glass-panel">
+                <div className="case-card-header">
+                  <div className="case-index-pill">
+                    <span>PROJECT {project.index}</span>
                   </div>
-                  
-                  <div className="featured-info">
-                    <p className="featured-category indigo-text">{project.category}</p>
-                    <h3 className="featured-title">{project.title}</h3>
-                    <p className="featured-desc">{project.desc}</p>
-                    
-                    <div className="featured-tech">
-                      {project.tech.map((t, idx) => (
-                        <span key={idx} className="tech-badge" style={{ transitionDelay: `${idx * 50}ms` }}>{t}</span>
+                  <div className="case-status-stamp">
+                    <span>● PRODUCTION DEPLOYED</span>
+                  </div>
+                </div>
+
+                <div className="studio-case-content">
+                  {/* Left Specs */}
+                  <div className="case-specs-col">
+                    <h3 className="case-project-title">{project.title}</h3>
+                    <p className="case-client-subtitle">{project.clientType}</p>
+                    <p className="case-project-desc">{project.desc}</p>
+
+                    <div className="case-specs-points">
+                      {project.highlights.map((h, i) => (
+                        <div key={i} className="spec-point">
+                          <span className="spec-arrow">→</span>
+                          <span>{h}</span>
+                        </div>
                       ))}
                     </div>
 
-                    <a href={project.link} className="btn btn-gold mobile-live-btn" target="_blank" rel="noreferrer">
-                      View Live Work <ExternalLink size={16} style={{marginLeft: '8px'}} />
-                    </a>
+                    <div className="case-tech-badges">
+                      {project.tech.map((t, idx) => (
+                        <span key={idx} className="studio-tech-badge">{t}</span>
+                      ))}
+                    </div>
+
+                    <div className="case-footer-actions">
+                      <a 
+                        href={project.link} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="btn btn-primary case-visit-btn"
+                      >
+                        <span>VISIT LIVE CLIENT WORK</span>
+                        <ArrowUpRight size={17} />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Right Media Frame */}
+                  <div className="case-media-frame">
+                    <div className="media-browser-bar">
+                      <div className="media-dots">
+                        <span className="media-dot" />
+                        <span className="media-dot" />
+                        <span className="media-dot" />
+                      </div>
+                      <span className="media-url">dadadesignstudio.in</span>
+                    </div>
+                    <div className="media-image-holder">
+                      <img src={project.image} alt={project.title} className="media-preview-img" />
+                    </div>
                   </div>
                 </div>
-              </ScrollReveal>
-            );
-          })}
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>

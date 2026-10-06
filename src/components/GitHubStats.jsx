@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GitFork, Star, Code, Terminal, ExternalLink, Sparkles, Activity } from 'lucide-react';
+import { GitFork, Star, Terminal, ExternalLink, Activity } from 'lucide-react';
 import { Github } from './Icons';
 import ScrollReveal from './ScrollReveal';
 import './GitHubStats.css';
@@ -7,8 +7,8 @@ import './GitHubStats.css';
 const featuredRepos = [
   {
     name: 'pratham-portfolio',
-    desc: 'Production-ready, highly interactive personal portfolio built with React, Framer Motion, and Glassmorphism design.',
-    language: 'JavaScript',
+    desc: 'Personal engineering portfolio built with React, clean editorial design system, and verified client deliverables.',
+    language: 'JavaScript / React',
     langColor: '#f1e05a',
     stars: 12,
     forks: 4,
@@ -16,8 +16,8 @@ const featuredRepos = [
   },
   {
     name: 'flutter-luxury-ui-kit',
-    desc: 'Cross-platform Flutter components and custom canvas animations for luxury e-commerce and portfolio apps.',
-    language: 'Dart',
+    desc: 'Cross-platform Flutter components and custom canvas animations for premium mobile and commerce apps.',
+    language: 'Dart / Flutter',
     langColor: '#00B4AB',
     stars: 18,
     forks: 6,
@@ -38,7 +38,6 @@ const GitHubStats = () => {
   const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
-    // Fetch live public info from GitHub API
     fetch('https://api.github.com/users/PRj2903')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -53,27 +52,21 @@ const GitHubStats = () => {
         <ScrollReveal variant="fade-down">
           <div className="section-header">
             <p className="section-subtitle">
-              Open Source &amp; Code <Activity size={16} className="indigo-text" />
+              <Activity size={15} /> Open Source &amp; Codebases
             </p>
-            <h2 className="section-title">GitHub Activity &amp; Repos</h2>
+            <h2 className="section-title">GitHub Activity &amp; Repositories</h2>
           </div>
         </ScrollReveal>
 
         <div className="github-grid">
           {/* Main GitHub Profile Overview Card */}
-          <ScrollReveal delay={100} className="github-overview-card glass-panel spotlight-card"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-              e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-            }}
-          >
+          <ScrollReveal delay={100} className="github-overview-card glass-panel">
             <div className="github-card-header">
               <div className="github-user-badge">
-                <Github size={32} className="indigo-text" />
+                <Github size={28} className="indigo-text" />
                 <div>
                   <h4 className="github-username">@PRj2903</h4>
-                  <span className="github-bio">Pratham Jadwani • GitHub Creator</span>
+                  <span className="github-bio">Pratham Jadwani &bull; Active Developer</span>
                 </div>
               </div>
               <a
@@ -82,36 +75,36 @@ const GitHubStats = () => {
                 rel="noreferrer"
                 className="btn btn-outline github-follow-btn"
               >
-                Follow <ExternalLink size={14} style={{ marginLeft: '6px' }} />
+                <span>Follow on GitHub</span>
+                <ExternalLink size={14} />
               </a>
             </div>
 
-            {/* Quick Metrics */}
+            {/* Metrics */}
             <div className="github-metrics-row">
               <div className="metric-box">
-                <span className="metric-val indigo-text">{profileData?.public_repos || '24+'}</span>
+                <span className="metric-val">{profileData?.public_repos || '24+'}</span>
                 <span className="metric-lbl">Repositories</span>
               </div>
               <div className="metric-box">
-                <span className="metric-val gold-text">100%</span>
-                <span className="metric-lbl">Clean Code Standard</span>
+                <span className="metric-val">100%</span>
+                <span className="metric-lbl">Code Quality Focus</span>
               </div>
               <div className="metric-box">
-                <span className="metric-val indigo-text">Flutter &amp; Web</span>
-                <span className="metric-lbl">Core Focus</span>
+                <span className="metric-val">Flutter &bull; React</span>
+                <span className="metric-lbl">Primary Specialization</span>
               </div>
             </div>
 
-            {/* Mock Contribution Graph Grid */}
+            {/* Clean Contribution Grid */}
             <div className="github-heatmap-container">
               <div className="heatmap-header">
                 <span className="heatmap-title">Contribution Pulse</span>
-                <span className="heatmap-legend">Active Daily Commits</span>
+                <span className="heatmap-legend">Daily Commits &amp; Releases</span>
               </div>
               <div className="heatmap-grid">
                 {Array.from({ length: 48 }).map((_, i) => {
                   const levels = ['level-0', 'level-1', 'level-2', 'level-3', 'level-4'];
-                  // Deterministic vibrant activity pattern
                   const level = levels[(i * 7 + 3) % levels.length];
                   return <div key={i} className={`heatmap-cell ${level}`} />;
                 })}
@@ -127,19 +120,14 @@ const GitHubStats = () => {
                   href={repo.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="repo-card glass-panel spotlight-card"
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                  }}
+                  className="repo-card glass-panel"
                 >
                   <div className="repo-header">
                     <div className="repo-name-group">
-                      <Terminal size={18} className="indigo-text" />
+                      <Terminal size={16} className="indigo-text" />
                       <h4 className="repo-name">{repo.name}</h4>
                     </div>
-                    <ExternalLink size={16} className="repo-ext-icon" />
+                    <ExternalLink size={15} className="repo-ext-icon" />
                   </div>
 
                   <p className="repo-desc">{repo.desc}</p>
@@ -150,8 +138,8 @@ const GitHubStats = () => {
                       <span>{repo.language}</span>
                     </div>
                     <div className="repo-stats">
-                      <span className="repo-stat-item"><Star size={14} /> {repo.stars}</span>
-                      <span className="repo-stat-item"><GitFork size={14} /> {repo.forks}</span>
+                      <span className="repo-stat-item"><Star size={13} /> {repo.stars}</span>
+                      <span className="repo-stat-item"><GitFork size={13} /> {repo.forks}</span>
                     </div>
                   </div>
                 </a>

@@ -1,170 +1,129 @@
 .projects-section {
   position: relative;
-  background: transparent;
-  overflow: hidden;
+  background: var(--bg-color);
 }
 
 .app-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.5rem;
 }
 
 .app-card {
-  padding: 2.8rem 2.2rem;
+  padding: 1.8rem;
   display: flex;
   flex-direction: column;
-  border-radius: 24px;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--card-shadow);
-  transform-style: preserve-3d;
   height: 100%;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0px var(--text-primary);
+  transition: all 0.2s ease;
 }
 
 .app-card:hover {
-  border-color: rgba(99, 102, 241, 0.25);
-  box-shadow: 0 25px 50px -15px var(--accent-glow);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--text-primary);
 }
 
-.app-card-header {
+.placeholder-card {
+  border-style: dashed;
+  background: var(--bg-subtle);
+}
+
+.app-card-top {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 2.2rem;
+  margin-bottom: 1.2rem;
 }
 
-.app-icon-wrapper {
-  width: 64px;
-  height: 64px;
+.app-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
   background: var(--bg-tertiary);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.app-card:hover .app-icon-wrapper {
-  background: var(--accent-primary);
-  color: #ffffff !important;
-  transform: scale(1.08) rotate(5deg);
-  box-shadow: 0 8px 20px var(--accent-glow);
-}
-
-.app-card:hover .app-icon-wrapper svg {
-  color: #ffffff !important;
-}
-
-.app-links {
-  display: flex;
-  gap: 1.2rem;
-}
-
-.app-link {
-  color: var(--text-secondary);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  width: 40px;
-  height: 40px;
-  background: var(--bg-tertiary);
-  border-radius: 50%;
+  border: 1.5px solid var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--glass-border);
 }
 
-.app-link:hover {
-  color: #ffffff;
-  background: var(--accent-primary);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px var(--accent-glow);
+.app-category-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--text-primary);
+  padding: 2px 8px;
+  border-radius: 4px;
 }
 
-.app-info {
-  flex: 1;
+.app-card-body {
+  margin-bottom: 1.5rem;
 }
 
 .app-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
 }
 
 .app-desc {
+  font-size: 0.88rem;
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
-.app-tech {
+.app-card-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1.5px solid var(--text-primary);
+}
+
+.app-tech-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: auto;
+  gap: 6px;
 }
 
 .tech-tag {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
   background: var(--bg-tertiary);
-  padding: 0.3rem 0.8rem;
-  border-radius: 5px;
-  border: 1px solid var(--glass-border);
-  transition: all 0.3s ease;
+  border: 1px solid var(--text-primary);
+  border-radius: 4px;
 }
 
-.app-card:hover .tech-tag {
+.app-actions-row {
+  display: flex;
+  align-items: center;
+}
+
+.app-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.app-source-link:hover {
   color: var(--accent-primary);
-  border-color: rgba(99, 102, 241, 0.15);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .app-grid {
     grid-template-columns: 1fr;
-    gap: 1.4rem;
-  }
-  .app-card {
-    padding: 1.6rem 1.35rem;
-    border-radius: 20px;
-  }
-  .app-card-header {
-    margin-bottom: 1.4rem;
-  }
-  .app-icon-wrapper {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-  }
-  .app-icon-wrapper svg {
-    width: 26px;
-    height: 26px;
-  }
-  .app-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.6rem;
-  }
-  .app-desc {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 1.4rem;
   }
 }
-
-.app-card.placeholder-card {
-  border-style: dashed;
-  border-color: rgba(245, 158, 11, 0.4);
-  opacity: 0.9;
-}
-
-.app-card.placeholder-card:hover {
-  border-color: var(--accent-gold);
-}
-

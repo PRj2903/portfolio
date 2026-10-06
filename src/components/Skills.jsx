@@ -1,82 +1,78 @@
 import React from 'react';
 import './Skills.css';
-import { Terminal, Lightbulb, Wrench } from 'lucide-react';
+import { Smartphone, Layout, Server, Sparkles, CheckCircle2 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 const Skills = () => {
-  const skillCategories = [
+  const skillDomains = [
     {
-      title: 'Languages',
-      icon: <Terminal size={26} />,
+      category: 'Mobile & Cross-Platform',
+      icon: <Smartphone size={22} className="indigo-text" />,
+      desc: 'Architecting 60fps native performance mobile experiences with robust state management.',
       skills: [
-        { name: 'C++', level: 85 },
-        { name: 'Java', level: 80 },
-        { name: 'SQL', level: 75 }
-      ]
+        { name: 'Flutter Framework', level: 'Production Expert' },
+        { name: 'Dart Language', level: 'Advanced' },
+        { name: 'State Management (BLoC / Provider)', level: 'Advanced' },
+        { name: 'Local DBs (Hive, SQLite)', level: 'Advanced' },
+        { name: 'Custom Canvas & Shaders', level: 'Intermediate' },
+      ],
     },
     {
-      title: 'Frameworks & Tech',
-      icon: <Lightbulb size={26} />,
+      category: 'Frontend & Creative UI',
+      icon: <Layout size={22} className="indigo-text" />,
+      desc: 'Building bespoke editorial web layouts with meticulous typographic hierarchy and smooth motion.',
       skills: [
-        { name: 'Flutter', level: 95 },
-        { name: 'Firebase', level: 90 },
-        { name: 'React', level: 85 }
-      ]
+        { name: 'React.js & Hooks', level: 'Production Expert' },
+        { name: 'Modern JavaScript (ES6+)', level: 'Advanced' },
+        { name: 'Responsive Vanilla CSS & Modules', level: 'Advanced' },
+        { name: 'UI/UX & Figma Prototyping', level: 'Advanced' },
+        { name: 'Micro-Animations (GSAP / Transitions)', level: 'Intermediate' },
+      ],
     },
     {
-      title: 'Tools',
-      icon: <Wrench size={26} />,
+      category: 'Backend, APIs & Cloud',
+      icon: <Server size={22} className="indigo-text" />,
+      desc: 'Designing scalable RESTful endpoints, persistent datastores, and cloud sync services.',
       skills: [
-        { name: 'VS Code', level: 95 },
-        { name: 'IntelliJ', level: 90 },
-        { name: 'Git', level: 85 }
-      ]
-    }
+        { name: 'Node.js & Express.js', level: 'Proficient' },
+        { name: 'RESTful API Architecture', level: 'Advanced' },
+        { name: 'MongoDB & Cloud Datastores', level: 'Proficient' },
+        { name: 'Firebase & Firestore Sync', level: 'Advanced' },
+        { name: 'Git, GitHub CI/CD & Deployments', level: 'Advanced' },
+      ],
+    },
   ];
 
   return (
     <section id="skills" className="skills-section">
       <div className="container">
         <ScrollReveal variant="fade-down">
-          <div className="section-header center-header">
-            <p className="section-subtitle justify-center">Technical Toolkit</p>
-            <h2 className="section-title">My Skills</h2>
+          <div className="section-header">
+            <p className="section-subtitle">
+              <Sparkles size={15} /> Technical Proficiency
+            </p>
+            <h2 className="section-title">Skills &amp; Engineering Disciplines</h2>
           </div>
         </ScrollReveal>
 
-        <div className="skills-grid">
-          {skillCategories.map((category, idx) => (
-            <ScrollReveal delay={idx * 120} variant="zoom-in" key={idx}>
-              <div 
-                className="skill-category-card glass-panel spotlight-card" 
-                onMouseMove={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const x = e.clientX - rect.left;
-                  const y = e.clientY - rect.top;
-                  e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-                  e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-                }}
-              >
-                <div className="category-header">
-                  <div className="category-icon indigo-text">
-                    {category.icon}
-                  </div>
-                  <h3 className="category-title">{category.title}</h3>
+        <div className="skills-domains-grid">
+          {skillDomains.map((domain, index) => (
+            <ScrollReveal delay={index * 100} key={domain.category}>
+              <div className="skill-domain-card glass-panel">
+                <div className="domain-header">
+                  <div className="domain-icon-box">{domain.icon}</div>
+                  <h3 className="domain-title">{domain.category}</h3>
+                  <p className="domain-desc">{domain.desc}</p>
                 </div>
-                
-                <div className="skills-list">
-                  {category.skills.map((skill, sIdx) => (
-                    <div className="skill-progress-item" key={sIdx}>
-                      <div className="skill-info-row">
-                        <span className="skill-name">{skill.name}</span>
-                        <span className="skill-percentage">{skill.level}%</span>
+
+                <div className="domain-skills-list">
+                  {domain.skills.map((s, idx) => (
+                    <div key={idx} className="skill-item-row">
+                      <div className="skill-name-wrap">
+                        <CheckCircle2 size={15} className="skill-check-icon" />
+                        <span className="skill-title-text">{s.name}</span>
                       </div>
-                      <div className="progress-bar-track">
-                        <div 
-                          className="progress-bar-fill"
-                          style={{ '--fill-width': `${skill.level}%` }}
-                        />
-                      </div>
+                      <span className="skill-level-badge">{s.level}</span>
                     </div>
                   ))}
                 </div>

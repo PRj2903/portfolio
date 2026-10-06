@@ -20,8 +20,21 @@ import { useToast } from './Toast';
 import './ResumeModal.css';
 
 const ResumeModal = ({ isOpen, onClose }) => {
-  const [viewTab, setViewTab] = useState('pdf'); // 'pdf' | 'summary'
+  // On mobile screens, default to 'summary' for immediate rich readability; on desktop, default to 'pdf'
+  const [viewTab, setViewTab] = useState(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return 'summary';
+    }
+    return 'pdf';
+  });
+
   const { addToast } = useToast();
+
+  useEffect(() => {
+    if (isOpen && typeof window !== 'undefined' && window.innerWidth < 768) {
+      setViewTab('summary');
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -56,7 +69,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
     triggerConfetti();
     addToast({
       title: 'Resume Downloaded!',
-      message: 'Pratham_Jadwani_Resume.pdf has been downloaded to your device.',
+      message: 'Pratham_Jadwani_Resume.pdf downloaded successfully.',
       type: 'sparkle',
     });
   };
@@ -71,73 +84,23 @@ const ResumeModal = ({ isOpen, onClose }) => {
   return (
     <div className="resume-modal-backdrop" onClick={onClose}>
       <div
-        className="resume-modal glass-panel spotlight-card"
+        className="resume-modal"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="resume-modal-header">
-          <div className="resume-header-left">
-            <div className="resume-icon-badge indigo-text">
-              <FileText size={20} />
-            </div>
-            <div>
-              <div className="resume-title-row">
-                <h3 className="resume-modal-title">Pratham Jadwani — Resume</h3>
-                <span className="resume-status-badge">
-                  <span className="resume-dot-pulse" /> Verified 2025/2026
-                </span>
+          <div className="resume-header-main">
+            <div className="resume-header-left">
+              <div className="resume-icon-badge">
+                <FileText size={18} className="indigo-text" />
               </div>
-              <p className="resume-modal-sub">
-                Flutter Developer &amp; Creative Web Designer &bull; CHARUSAT CS
-              </p>
+              <div>
+                <h3 className="resume-modal-title">Pratham Jadwani &mdash; Resume</h3>
+                <p className="resume-modal-sub">
+                  Flutter Developer &bull; CHARUSAT CS &bull; 8.89 CGPA
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* Controls */}
-          <div className="resume-header-actions">
-            {/* View Switcher on Mobile/Desktop */}
-            <div className="resume-tab-switcher">
-              <button
-                className={`resume-tab-btn ${viewTab === 'pdf' ? 'active' : ''}`}
-                onClick={() => setViewTab('pdf')}
-              >
-                <Eye size={14} /> PDF Viewer
-              </button>
-              <button
-                className={`resume-tab-btn ${viewTab === 'summary' ? 'active' : ''}`}
-                onClick={() => setViewTab('summary')}
-              >
-                <Sparkles size={14} /> Highlights
-              </button>
-            </div>
-
-            <button
-              onClick={handleDownload}
-              className="btn btn-primary resume-action-btn"
-              title="Download PDF"
-            >
-              <Download size={16} /> <span>Download</span>
-            </button>
-
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="resume-tool-btn"
-              title="Open in New Tab"
-              aria-label="Open PDF in New Tab"
-            >
-              <ExternalLink size={17} />
-            </a>
-
-            <button
-              onClick={handlePrint}
-              className="resume-tool-btn"
-              title="Print Resume"
-              aria-label="Print Resume"
-            >
-              <Printer size={17} />
-            </button>
 
             <button
               onClick={onClose}
@@ -148,56 +111,85 @@ const ResumeModal = ({ isOpen, onClose }) => {
               <X size={20} />
             </button>
           </div>
+
+          {/* Controls Row */}
+          <div className="resume-header-actions">
+            <div className="resume-tab-switcher">
+              <button
+                className={`resume-tab-btn ${viewTab === 'summary' ? 'active' : ''}`}
+                onClick={() => setViewTab('summary')}
+              >
+                <Sparkles size={13} /> Interactive Overview
+              </button>
+              <button
+                className={`resume-tab-btn ${viewTab === 'pdf' ? 'active' : ''}`}
+                onClick={() => setViewTab('pdf')}
+              >
+                <Eye size={13} /> PDF Viewer
+              </button>
+            </div>
+
+            <div className="resume-quick-tools">
+              <button
+                onClick={handleDownload}
+                className="btn btn-primary resume-action-btn"
+                title="Download PDF"
+              >
+                <Download size={15} /> <span>Download</span>
+              </button>
+
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="resume-tool-btn"
+                title="Open PDF in New Window"
+                aria-label="Open in New Tab"
+              >
+                <ExternalLink size={16} />
+              </a>
+
+              <button
+                onClick={handlePrint}
+                className="resume-tool-btn desktop-tool"
+                title="Print Resume"
+                aria-label="Print"
+              >
+                <Printer size={16} />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Modal Content */}
         <div className="resume-modal-body">
-          {viewTab === 'pdf' ? (
-            <div className="resume-pdf-container">
-              <iframe
-                src="/resume.pdf#view=FitH&toolbar=0&navpanes=0"
-                title="Pratham Jadwani Resume PDF"
-                className="resume-iframe"
-              />
-              <div className="resume-mobile-pdf-notice">
-                <p>Viewing on mobile device? If PDF doesn&apos;t load, switch to <strong>Highlights</strong> or tap below:</p>
-                <div className="resume-notice-actions">
-                  <button onClick={() => setViewTab('summary')} className="btn btn-outline">
-                    View Interactive Highlights
-                  </button>
-                  <button onClick={handleDownload} className="btn btn-primary">
-                    <Download size={14} style={{ marginRight: '6px' }} /> Download File
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
+          {viewTab === 'summary' ? (
             /* Interactive Summary Tab */
             <div className="resume-summary-container">
               <div className="summary-grid">
                 {/* Academic & Objective */}
-                <div className="summary-card glass-panel">
+                <div className="summary-card">
                   <div className="summary-card-header">
-                    <GraduationCap className="gold-text" size={20} />
+                    <GraduationCap className="gold-text" size={18} />
                     <h4>Education &amp; Background</h4>
                   </div>
                   <div className="summary-list-item">
                     <span className="summary-item-title">B.Tech Computer Science &amp; Engineering</span>
-                    <span className="summary-item-sub">Charotar University of Science and Technology (CHARUSAT)</span>
+                    <span className="summary-item-sub">Charotar University of Science &amp; Technology (CHARUSAT)</span>
                   </div>
                   <div className="summary-list-item">
                     <div className="summary-cgpa-row">
-                      <span className="summary-cgpa-val gold-text">8.89 CGPA</span>
-                      <span className="summary-item-sub">Diploma CS Foundation</span>
+                      <span className="summary-cgpa-val">8.89</span>
+                      <span className="summary-item-sub">Diploma CS Foundation (Top Academic Honors)</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Core Technical Strengths */}
-                <div className="summary-card glass-panel">
+                <div className="summary-card">
                   <div className="summary-card-header">
-                    <Code2 className="indigo-text" size={20} />
-                    <h4>Core Specialties</h4>
+                    <Code2 className="indigo-text" size={18} />
+                    <h4>Core Specialties &amp; Stack</h4>
                   </div>
                   <div className="summary-skills-chips">
                     <span className="skill-chip">Flutter</span>
@@ -209,28 +201,48 @@ const ResumeModal = ({ isOpen, onClose }) => {
                     <span className="skill-chip">REST APIs</span>
                     <span className="skill-chip">Hive DB</span>
                     <span className="skill-chip">Firebase</span>
-                    <span className="skill-chip">UI/UX Design</span>
+                    <span className="skill-chip">UI/UX Craft</span>
                   </div>
                 </div>
 
                 {/* Featured Client & App Deliverables */}
-                <div className="summary-card glass-panel summary-card-span2">
+                <div className="summary-card summary-card-span2">
                   <div className="summary-card-header">
-                    <Briefcase className="indigo-text" size={20} />
-                    <h4>Delivered Client &amp; Mobile Projects</h4>
+                    <Briefcase className="indigo-text" size={18} />
+                    <h4>Production Client &amp; Mobile Deliverables</h4>
                   </div>
                   <div className="summary-projects-row">
                     <div className="summary-proj-box">
                       <h5>Dada Design Studio</h5>
-                      <p>Architecture portfolio platform with minimalist aesthetics and smooth transitions.</p>
-                      <span className="summary-proj-tag">React &bull; Live Client</span>
+                      <p>Full-scale architecture portfolio platform with structural minimalism and responsive animations.</p>
+                      <span className="summary-proj-tag">React.js &bull; Live Client Platform</span>
                     </div>
                     <div className="summary-proj-box">
                       <h5>StudyMate &amp; Ptunes</h5>
-                      <p>Cross-platform Flutter educational and media player applications with dynamic theming.</p>
-                      <span className="summary-proj-tag">Flutter &bull; Mobile App</span>
+                      <p>Cross-platform educational suite &amp; native audio player featuring dynamic theming and offline Hive DB.</p>
+                      <span className="summary-proj-tag">Flutter &bull; Mobile Engineering</span>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* PDF Viewer Tab */
+            <div className="resume-pdf-container">
+              <iframe
+                src="/resume.pdf#view=FitH&toolbar=0&navpanes=0"
+                title="Pratham Jadwani Resume PDF"
+                className="resume-iframe"
+              />
+              <div className="resume-mobile-pdf-notice">
+                <p>Viewing on a mobile device? If inline PDF preview doesn&apos;t load, tap below:</p>
+                <div className="resume-notice-actions">
+                  <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn btn-primary">
+                    <ExternalLink size={15} style={{ marginRight: '6px' }} /> Open Fullscreen PDF
+                  </a>
+                  <button onClick={handleDownload} className="btn btn-outline">
+                    <Download size={15} style={{ marginRight: '6px' }} /> Download File
+                  </button>
                 </div>
               </div>
             </div>
@@ -240,12 +252,12 @@ const ResumeModal = ({ isOpen, onClose }) => {
         {/* Modal Footer */}
         <div className="resume-modal-footer">
           <div className="resume-footer-contact">
-            <span><Mail size={14} /> Jpratham9716@gmail.com</span>
-            <span><Phone size={14} /> +91 9722768555</span>
+            <a href="mailto:Jpratham9716@gmail.com"><Mail size={13} /> Jpratham9716@gmail.com</a>
+            <a href="tel:+919722768555"><Phone size={13} /> +91 9722768555</a>
           </div>
           <div className="resume-footer-actions">
             <button onClick={handleDownload} className="btn btn-primary resume-footer-btn">
-              <Download size={15} style={{ marginRight: '6px' }} /> Download PDF
+              <Download size={14} style={{ marginRight: '6px' }} /> Download PDF
             </button>
           </div>
         </div>
