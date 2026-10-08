@@ -70,6 +70,8 @@
   border-radius: 4px;
   border: 1.5px solid var(--text-primary);
   box-shadow: 1.5px 1.5px 0px var(--text-primary);
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .hero-cta-group {
@@ -253,56 +255,83 @@
 @media (max-width: 992px) {
   .hero-section {
     padding-top: 100px;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
   }
 
   .hero-content {
     grid-template-columns: 1fr;
     gap: 2.5rem;
     text-align: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
   }
   
   .studio-index-tag {
     margin: 0 auto 1.2rem;
+    align-self: center;
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    text-align: center;
+    width: 100%;
   }
 
   .hero-description {
     margin: 0 auto 2rem;
+    text-align: center;
+    width: 100%;
+    max-width: 580px;
   }
 
   .hero-cta-group {
     justify-content: center;
+    align-self: center;
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .studio-meta-bar {
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .studio-portrait-card {
     margin: 0 auto;
     max-width: 360px;
   }
-  
-  .hero-title {
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
-  }
-
-  .studio-meta-bar {
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-  }
 }
 
 @media (max-width: 640px) {
   .hero-section {
     padding-top: 85px;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
   }
 
   .hero-title {
-    font-size: clamp(1.95rem, 8.5vw, 2.5rem);
+    font-size: clamp(1.8rem, 7.8vw, 2.35rem);
     letter-spacing: -0.03em;
+    text-align: center;
+    width: 100%;
   }
 
   .hero-description {
     font-size: 0.94rem;
     line-height: 1.6;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
   }
 
   .studio-meta-bar {
@@ -313,6 +342,10 @@
     padding: 12px 14px;
     border: 1.5px solid var(--text-primary);
     border-radius: 8px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .studio-meta-col {
@@ -324,7 +357,14 @@
   .hero-cta-group {
     flex-direction: column;
     width: 100%;
+    max-width: 340px;
     gap: 0.75rem;
+    margin: 0 auto 2rem;
+    align-self: center;
+  }
+
+  .hero-cta-group .magnetic-wrapper {
+    width: 100%;
   }
   
   .cta-btn {
@@ -334,6 +374,7 @@
 
   .studio-portrait-card {
     max-width: 340px;
+    width: 100%;
     margin: 0 auto;
     box-shadow: 4px 4px 0px var(--text-primary);
   }

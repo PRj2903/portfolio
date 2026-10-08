@@ -2,17 +2,19 @@
   display: none;
   position: fixed;
   bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   z-index: 999;
   width: calc(100% - 24px);
-  max-width: 400px;
-  transition: transform 0.25s ease;
+  max-width: 390px;
+  box-sizing: border-box;
+  transition: transform 0.25s ease, opacity 0.25s ease;
   pointer-events: auto;
 }
 
 .mobile-nav-dock.dock-hidden {
-  transform: translateX(-50%) translateY(100px);
+  transform: translateY(100px);
   opacity: 0;
   pointer-events: none;
 }
