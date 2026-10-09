@@ -23,13 +23,60 @@ import { useToast } from './Toast';
 import { triggerConfetti } from '../utils/confetti';
 import './CommandPalette.css';
 
-const CommandPalette = ({ isOpen, onClose, theme, toggleTheme, onOpenResume }) => {
+const CommandPalette = ({ isOpen, onClose, theme, toggleTheme, onOpenResume, onOpenProject }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
   const { addToast } = useToast();
 
+  const handleOpenCaseStudy = (id) => {
+    onClose();
+    if (onOpenProject) {
+      onOpenProject(id);
+    } else {
+      document.dispatchEvent(new CustomEvent('open-project-modal', { detail: id }));
+    }
+  };
+
   const commands = [
+    // Case Studies Deep-Dives
+    {
+      id: 'case-dada',
+      group: 'Case Studies',
+      title: 'Dada Design Studio — Architectural Monograph',
+      subtitle: 'React.js, GSAP motion, Swiss grid layouts, and spatial galleries',
+      icon: <Star size={18} />,
+      badge: 'Client',
+      action: () => handleOpenCaseStudy('dada-design'),
+    },
+    {
+      id: 'case-ptunes',
+      group: 'Case Studies',
+      title: 'Ptunes Music Player — Audio Streaming & Offline Player',
+      subtitle: 'Flutter, BLoC architecture, SQLite local caching, and live FFT visualizer',
+      icon: <Smartphone size={18} />,
+      badge: 'Flutter',
+      action: () => handleOpenCaseStudy('ptunes-player'),
+    },
+    {
+      id: 'case-studymate',
+      group: 'Case Studies',
+      title: 'StudyMate — Academic Schedule & Productivity',
+      subtitle: 'Full-stack Flutter + Spring Boot REST API, JWT auth, and study timers',
+      icon: <Code2 size={18} />,
+      badge: 'Full-Stack',
+      action: () => handleOpenCaseStudy('studymate'),
+    },
+    {
+      id: 'case-flashcard',
+      group: 'Case Studies',
+      title: 'Flashcard Learning App — Spaced Repetition (SM-2)',
+      subtitle: 'Flutter, Firestore sync, SuperMemo SM-2 memory retention engine',
+      icon: <Sparkles size={18} />,
+      badge: 'EdTech',
+      action: () => handleOpenCaseStudy('flashcard-app'),
+    },
+
     // Navigation
     {
       id: 'nav-home',

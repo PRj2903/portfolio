@@ -13,7 +13,7 @@ const Skills = () => {
         { name: 'Flutter Framework', level: 'Production Expert' },
         { name: 'Dart Language', level: 'Advanced' },
         { name: 'State Management (BLoC / Provider)', level: 'Advanced' },
-        { name: 'Local DBs (Hive, SQLite)', level: 'Advanced' },
+        { name: 'Local DBs (SQLite, Room)', level: 'Advanced' },
         { name: 'Custom Canvas & Shaders', level: 'Intermediate' },
       ],
     },

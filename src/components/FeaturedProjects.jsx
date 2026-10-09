@@ -3,7 +3,7 @@ import './FeaturedProjects.css';
 import { ExternalLink, ArrowUpRight, CheckCircle2, Globe, Layers, ArrowRight } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
-const FeaturedProjects = () => {
+const FeaturedProjects = ({ onOpenProject }) => {
   const featured = [
     {
       id: 'dada-design',
@@ -71,13 +71,21 @@ const FeaturedProjects = () => {
                     </div>
 
                     <div className="case-footer-actions">
+                      <button
+                        type="button"
+                        className="btn btn-outline case-study-btn"
+                        onClick={() => onOpenProject && onOpenProject(project.id)}
+                      >
+                        <Layers size={16} />
+                        <span>Architecture Deep-Dive</span>
+                      </button>
                       <a 
                         href={project.link} 
                         target="_blank" 
                         rel="noreferrer" 
                         className="btn btn-primary case-visit-btn"
                       >
-                        <span>VISIT LIVE CLIENT WORK</span>
+                        <span>Visit Live Site</span>
                         <ArrowUpRight size={17} />
                       </a>
                     </div>

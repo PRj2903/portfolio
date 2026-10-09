@@ -199,7 +199,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                     <span className="skill-chip">Node.js</span>
                     <span className="skill-chip">Express</span>
                     <span className="skill-chip">REST APIs</span>
-                    <span className="skill-chip">Hive DB</span>
+                    <span className="skill-chip">SQLite</span>
                     <span className="skill-chip">Firebase</span>
                     <span className="skill-chip">UI/UX Craft</span>
                   </div>
@@ -219,7 +219,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                     </div>
                     <div className="summary-proj-box">
                       <h5>StudyMate &amp; Ptunes</h5>
-                      <p>Cross-platform educational suite &amp; native audio player featuring dynamic theming and offline Hive DB.</p>
+                      <p>Cross-platform educational suite &amp; native audio player featuring dynamic theming and offline local caching.</p>
                       <span className="summary-proj-tag">Flutter &bull; Mobile Engineering</span>
                     </div>
                   </div>

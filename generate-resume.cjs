@@ -198,7 +198,7 @@ function createResume() {
     {
       name: 'Ptunes Music Player',
       desc: 'A gorgeous local audio player featuring native background-play service and local caching.',
-      tech: 'Flutter, Audio Service, Hive DB'
+      tech: 'Flutter, Audio Service, SQLite'
     },
     {
       name: 'Flashcard Learning App',

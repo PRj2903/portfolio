@@ -1,46 +1,50 @@
 import React from 'react';
 import './Projects.css';
-import { Smartphone, Sparkles, ArrowUpRight } from 'lucide-react';
+import { Smartphone, Sparkles, ArrowUpRight, BookOpen, Layers } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import ScrollReveal from './ScrollReveal';
 
-const Projects = () => {
+const Projects = ({ onOpenProject }) => {
   const appProjects = [
     {
-      id: 1,
+      id: 'studymate',
       title: 'StudyMate',
       category: 'Education & Productivity',
-      desc: 'A student companion application streamlining academic schedules, study timers, and course progress tracking with clean state architecture.',
+      desc: 'A student companion application streamlining academic schedules, study timers, and course progress tracking backed by a robust Spring Boot REST API.',
       tech: ['Flutter', 'Spring Boot', 'REST API', 'Provider'],
       github: 'https://github.com/PRj2903',
+      hasCaseStudy: true,
       demo: null
     },
     {
-      id: 2,
+      id: 'ptunes-player',
       title: 'Ptunes Music Player',
       category: 'Audio Streaming & Offline Player',
-      desc: 'An aesthetically refined mobile music player featuring dynamic audio visualizers, background playback service, and offline Hive local caching.',
-      tech: ['Flutter', 'Audio Service', 'Hive DB', 'BLoC'],
+      desc: 'An aesthetically refined mobile music player featuring dynamic audio visualizers, background playback service, and offline local caching.',
+      tech: ['Flutter', 'Audio Service', 'SQLite', 'BLoC'],
       github: 'https://github.com/PRj2903',
+      hasCaseStudy: true,
       demo: null
     },
     {
-      id: 3,
+      id: 'flashcard-app',
       title: 'Flashcard Learning App',
       category: 'EdTech & Spaced Repetition',
-      desc: 'An interactive spaced repetition learning tool with customizable flashcard decks, cloud sync, and retention analytics.',
+      desc: 'An interactive spaced repetition learning tool with customizable flashcard decks, cloud sync, and memory retention analytics.',
       tech: ['Flutter', 'Firebase Firestore', 'Cloud Sync'],
       github: 'https://github.com/PRj2903',
+      hasCaseStudy: true,
       demo: null
     },
     {
-      id: 4,
+      id: 'upcoming-apps',
       isPlaceholder: true,
       title: 'Upcoming Flutter & Android Apps',
       category: 'In Active Development',
       desc: 'New cross-platform mobile apps featuring Material 3 theming, offline-first architectures, and high-performance canvas UI are currently in engineering.',
       tech: ['Android SDK', 'Flutter', 'Kotlin', 'Material 3'],
       github: 'https://github.com/PRj2903',
+      hasCaseStudy: false,
       demo: null
     }
   ];
@@ -84,8 +88,20 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  {project.github && (
-                    <div className="app-actions-row">
+                  <div className="app-actions-row">
+                    {project.hasCaseStudy && (
+                      <button
+                        type="button"
+                        className="btn-app-case-study"
+                        onClick={() => onOpenProject && onOpenProject(project.id)}
+                        title={`View ${project.title} Architecture & Details`}
+                      >
+                        <Layers size={14} />
+                        <span>Case Study</span>
+                      </button>
+                    )}
+
+                    {project.github && (
                       <a 
                         href={project.github} 
                         target="_blank" 
@@ -93,12 +109,12 @@ const Projects = () => {
                         className="app-source-link"
                         title="View Source on GitHub"
                       >
-                        <FaGithub size={15} />
-                        <span>Source Code</span>
-                        <ArrowUpRight size={13} />
+                        <FaGithub size={14} />
+                        <span>Source</span>
+                        <ArrowUpRight size={12} />
                       </a>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </ScrollReveal>

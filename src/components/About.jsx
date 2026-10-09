@@ -38,7 +38,7 @@ const About = ({ onOpenResume }) => {
 
   const techStack = [
     'Flutter', 'Dart', 'React.js', 'JavaScript (ES6+)',
-    'Node.js', 'Express', 'REST APIs', 'Hive DB',
+    'Node.js', 'Express', 'REST APIs', 'MySQL',
     'MongoDB', 'Firebase', 'Tailwind CSS', 'Figma', 'Git'
   ];
 

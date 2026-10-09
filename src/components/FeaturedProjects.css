@@ -166,6 +166,28 @@
   transition: transform 0.4s ease;
 }
 
+.case-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.case-study-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.case-visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
 .studio-case-card:hover .media-preview-img {
   transform: scale(1.03);
 }
